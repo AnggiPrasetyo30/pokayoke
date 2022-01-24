@@ -1,15 +1,18 @@
-package com.example.hyundai;
+package com.example.hyundai.activity;
 
+import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteOpenHelper;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.hyundai.R;
 import com.example.hyundai.SQLite.DatabaseHelper;
 import com.example.hyundai.SQLite.User;
 import com.google.android.material.snackbar.Snackbar;
@@ -18,10 +21,21 @@ import com.google.android.material.textfield.TextInputLayout;
 public class Login extends AppCompatActivity {
 
     EditText etUsername, etPassword;
-    TextInputLayout textInputLayoutEmail,textInputLayoutPassword;
     Button btnLogin;
 
+    private final static String NPK = "npk";
+    private final static String PASSWORD = "password";
+    private final static String NAMA = "name";
+
     DatabaseHelper mDatabaseHelper;
+
+    public static final String MyPREFERENCES = "MyPrefs" ;
+    public static final String Kname = "nameKey";
+    public static final String Knpk = "npkKey";
+    public static final String Kpassword = "passwordKey";
+    public static final String Kusername = "usernameKey";
+    public static final String Kusergroup = "usergroupKey";
+    SharedPreferences sharedpreferences;
 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +44,9 @@ public class Login extends AppCompatActivity {
         etUsername = findViewById(R.id.userLog);
         etPassword = findViewById(R.id.passwordLog);
         btnLogin = findViewById(R.id.btnReset);
+
+        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -37,35 +54,39 @@ public class Login extends AppCompatActivity {
                 String npk = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
 
-                /*String success = mDatabaseHelper.loadHandler(npk,password);
+                User currentUser = mDatabaseHelper.Authenticate(new User(null,npk, null, password, null));
 
-                if (sucess != null) {
-                    Snackbar.make(btnLogin, "Successfully Logged in!", Snackbar.LENGTH_LONG).show();
-                    Intent intent=new Intent(Login.this,SelectScanner.class);
-                    startActivity(intent);
-                    finish();
+                SharedPreferences.Editor editor = sharedpreferences.edit();
 
-                } else {
+                editor.putString(Kname, currentUser.getName());
+                editor.putString(Knpk, npk);
+                editor.putString(Kpassword, password);
+                editor.putString(Kusername, currentUser.getUsername());
+                editor.putString(Kusergroup, currentUser.getUsergroup());
+                editor.commit();
 
-                    //User Logged in Failed
-                    Snackbar.make(btnLogin, "Failed to log in , please try again", Snackbar.LENGTH_LONG).show();
-
-                }*/
-
-                User currentUser = mDatabaseHelper.Authenticate(new User(null, npk, null, password));
                 if (currentUser != null) {
-                    Snackbar.make(btnLogin, "Successfully Logged in!", Snackbar.LENGTH_LONG).show();
-                    Intent intent=new Intent(Login.this,SelectScanner.class);
-                    intent.putExtra("NPK", currentUser.getNpk());
-                    intent.putExtra("NAMA", currentUser.getName());
-                    startActivity(intent);
-                    finish();
+                    if (currentUser.getUsergroup().equals("Operator")){
+                        Intent intent=new Intent(Login.this,SelectScanner.class);
+                        intent.putExtra(NPK, currentUser.getNpk());
+                        intent.putExtra(NAMA, currentUser.getName());
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                    }else{
+                        Intent intent=new Intent(Login.this,SelectScannerLeader.class);
+                        intent.putExtra(NPK, currentUser.getNpk());
+                        intent.putExtra(NAMA, currentUser.getName());
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                    }
                 } else {
 
                     //User Logged in Failed
                     Snackbar.make(btnLogin, "Failed to log in , please try again", Snackbar.LENGTH_LONG).show();
 
                 }
+
+
             }
         });
     }

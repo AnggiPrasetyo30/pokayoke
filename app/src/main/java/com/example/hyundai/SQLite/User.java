@@ -4,45 +4,45 @@ import java.util.Date;
 
 public class User {
 
-    public Integer id;
+    //public String id;
     public String npk;
     public String username;
     public String password;
-    public String rfid_tag;
     public String name;
     public String usergroup;
+    /*public String rfid_tag;
     public Integer department_id;
     public Integer op_skill;
     public Date last_login;
     public String status;
     public Date created_at;
-    public Date updated_at;
+    public Date updated_at;*/
 
-    public User() {
+    public User(String name, String npk, String username, String password, String usergroup) {
 
-        this.id = id;
+        //this.id = id;
         this.npk = npk;
         this.username = username;
         this.password = password;
-        this.rfid_tag = rfid_tag;
         this.name = name;
         this.usergroup = usergroup;
+        /*this.rfid_tag = rfid_tag;
         this.department_id = department_id;
         this.op_skill = op_skill;
         this.last_login = last_login;
         this.status = status;
         this.created_at = created_at;
-        this.updated_at = updated_at;
+        this.updated_at = updated_at;*/
 
     }
 
-    public Integer getId() {
+   /* public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
-    }
+    }*/
 
     public String getNpk() {
         return npk;
@@ -68,28 +68,22 @@ public class User {
         this.password = password;
     }
 
-    public String getRfid_tag() {
+    public String getName() { return name; }
+
+    public void setName(String name) { this.name = name; }
+
+    public String getUsergroup() { return usergroup; }
+
+    public void setUsergroup(String usergroup) {
+        this.usergroup = usergroup;
+    }
+
+    /*public String getRfid_tag() {
         return rfid_tag;
     }
 
     public void setRfid_tag(String rfid_tag) {
         this.rfid_tag = rfid_tag;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getUsergroup() {
-        return usergroup;
-    }
-
-    public void setUsergroup(String usergroup) {
-        this.usergroup = usergroup;
     }
 
     public Integer getDepartment_id() {
@@ -138,5 +132,5 @@ public class User {
 
     public void setUpdated_at(Date updated_at) {
         this.updated_at = updated_at;
-    }
+    }*/
 }

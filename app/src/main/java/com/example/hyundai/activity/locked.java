@@ -1,8 +1,9 @@
-package com.example.hyundai;
+package com.example.hyundai.activity;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import com.example.hyundai.R;
 
 public class locked extends AppCompatActivity {
 
@@ -11,4 +12,6 @@ public class locked extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_locked);
     }
+
+    public void onBackPressed() {    }
 }

@@ -1,12 +1,24 @@
 package com.example.hyundai.SQLite;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
+import android.util.Log;
+import android.widget.Toast;
 
+import com.example.hyundai.activity.MainActivity;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,173 +26,163 @@ import static android.accounts.AccountManager.KEY_PASSWORD;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 1;
+    private static final String DB_name = "mobile_db.db";
+    private static String DB_PATH = "";
+    SQLiteDatabase myDatabase;
+    private final Context mContext;
 
-    private static final String DATABASE_NAME = "HyundaiPokayoke.db";
+    public static final String TABLE_USER = "user";
+    public static final String TABLE_PRODUCT = "product";
 
-    private static final String TABLE_USER = "user";
-
-    //User Table
-    private static final String ID = "id";
-    private static final String npk = "npk";
-    private static final String username = "username";
-    private static final String password = "password";
-    private static final String rfid_tag = "rfid_tag";
-    private static final String name = "name";
-    private static final String usergroup = "usergorup";
-    private static final String department_id = "department_id";
-    private static final String op_skill = "op_skill";
-    private static final String last_login = "last_login";
-    private static final String status = "status";
-    private static final String created_at = "created_at";
-    private static final String updated_at = "updated_at";
-
-    // create table sql query
-    private String CREATE_USER_TABLE = "CREATE TABLE " + TABLE_USER + "("
-            + ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + npk + " TEXT,"
-            + username + " TEXT," + password + " TEXT," + rfid_tag + " TEXT," + name + " TEXT, " + usergroup + " TEXT,"
-        + department_id + " INTEGER," + op_skill + " INTEGER," + last_login + " DATE," + status + " TEXT," +
-            created_at + " DATE," + updated_at + " DATE" +")";
-
-    private String DROP_USER_TABLE = "DROP TABLE IF EXISTS " + TABLE_USER;
 
     public DatabaseHelper(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        super(context, DB_name, null, 2);
+        this.mContext = context;
+        this.DB_PATH = "/data/data/" + mContext.getPackageName() + "/databases/";
+
     }
 
+
+    public void createDatabase() throws IOException {
+        boolean mDatabaseExist = checkDataBase();
+        if (!mDatabaseExist){
+            this.getReadableDatabase();
+            this.close();
+            try{
+                copyDataBase();
+
+            }catch (IOException mIOException){
+                mIOException.printStackTrace();
+                throw new Error("Error copying database");
+            }finally {
+                this.close();
+            }
+        }
+    }
+
+    private void copyDataBase() throws IOException {
+        try{
+            InputStream inputStream = mContext.getAssets().open(DB_name);
+            String OutfileName = DB_PATH+DB_name;
+            OutputStream outputStream = new FileOutputStream(OutfileName);
+
+            byte [] buffer = new byte[1024];
+            int lenght;
+            while ((lenght = inputStream.read(buffer)) > 0){
+                outputStream.write(buffer, 0, lenght);
+            }
+            outputStream.flush();
+            outputStream.close();
+            inputStream.close();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    //Check database already exist or not
+    private boolean checkDataBase() {
+        try{
+            final String mPath = DB_PATH + DB_name;
+            final File file = new File(mPath);
+            if (file.exists()){
+                return true;
+            }else{
+                return false;
+            }
+        }catch (SQLiteException e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+    public synchronized void close() {
+        if(myDatabase != null){
+            myDatabase.close();
+            SQLiteDatabase.releaseMemory();
+            super.close();
+        }
+    }
 
     @Override
-    public void onCreate(SQLiteDatabase db) {
-        db.execSQL(CREATE_USER_TABLE);
-        ArrayList<User> list = new ArrayList<>();
-        add_users(list);
-    }
+    public void onCreate(SQLiteDatabase db) {}
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(CREATE_USER_TABLE);
-        onCreate(db);
-    }
-
-    public void add_users(ArrayList<User> list) {
-        SQLiteDatabase database = this.getWritableDatabase();
-        String sql = "INSERT INTO " + TABLE_USER +
-        " VALUES('0268', '0268', 'leader', '2579541961', 'Ropik Nur Faizal', " +
-                "'Leader', 'PPIC', 0, '2021-12-24 13:46:44', 'Active', " +
-                "'2021-02-28 06:11:51', '0000-00-00 00:00:00')";
-        SQLiteStatement statement = database.compileStatement(sql);
-        database.beginTransaction();
-        try {
-            for (User c : list) {
-                statement.clearBindings();
-                statement.bindString(1, c.getNpk());
-                statement.bindString(2, c.getUsername());
-                statement.bindString(3, c.getPassword());
-                statement.bindString(4, c.getRfid_tag());
-                statement.bindString(5, c.getName());
-                statement.bindString(6, c.getUsergroup());
-                statement.bindLong(7, c.getDepartment_id());
-                statement.bindLong(8, c.getOp_skill());
-                statement.bindString(10, c.getStatus());
-                statement.execute();
+        if(newVersion>oldVersion) {
+            try {
+                copyDataBase();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            database.setTransactionSuccessful();
-        } finally {
-            database.endTransaction();
         }
-    }
-
-    public void addUser(User user) {
-        SQLiteDatabase database = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(npk, user.getNpk());
-        values.put(username, user.getUsername());
-        values.put(password, user.getPassword());
-        values.put(rfid_tag, user.getRfid_tag());
-        values.put(name, user.getName());
-        values.put(usergroup, user.getUsergroup());
-        values.put(department_id, user.getDepartment_id());
-        values.put(op_skill, user.getOp_skill());
-        values.put(last_login, user.getLast_login().getTimezoneOffset());
-        values.put(status, user.getStatus());
-        values.put(created_at, user.getCreated_at().getTimezoneOffset());
-        values.put(updated_at, user.getUpdated_at().getTimezoneOffset());
-    }
-
-    public boolean checkUser(String npk, String password) {
-        // array of columns to fetch
-        String[] columns = {
-                ID
-        };
-        SQLiteDatabase db = this.getReadableDatabase();
-        // selection criteria
-        String selection = npk + " = ?" + " AND " + password + " = ?";
-        // selection arguments
-        String[] selectionArgs = {npk, password};
-        Cursor cursor = db.query(TABLE_USER, //Table to query
-                columns,                    //columns to return
-                selection,                  //columns for the WHERE clause
-                selectionArgs,              //The values for the WHERE clause
-                null,                       //group the rows
-                null,                       //filter by row groups
-                null);                      //The sort order
-        int cursorCount = cursor.getCount();
-        cursor.close();
-        db.close();
-        if (cursorCount > 0) {
-            return true;
-        }
-        return false;
     }
 
     public User Authenticate(User user) {
+        String name = "name";
+        String npk = "npk";
+        String username = "username";
+        String password = "password";
+        String usergroup = "usergroup";
+
+        try{
+            createDatabase();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_USER,// Selecting Table
-                new String[]{ID, npk, username, password},//Selecting columns want to query
+                new String[]{name, npk, username, password, usergroup},//Selecting columns want to query
                 npk + "=?",
                 new String[]{user.npk},//Where clause
                 null, null, null);
 
         if (cursor != null && cursor.moveToFirst()&& cursor.getCount()>0) {
-            User user1 = new User();
+            User user1 = new User(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
+            //user1.setUsergroup(cursor.getString(4));
+            if (user.password.equalsIgnoreCase(user1.password)) {
                 return user1;
+            }
         }
+        cursor.close();
+        db.close();
         return null;
     }
 
-//    public List<User> getAllUser() {
-//        // array of columns to fetch
-//        String[] columns = {
-//                ID, npk, username, password, rfid_tag, name, usergroup, department_id,
-//                op_skill, last_login, status, created_at, updated_at
-//        };
-//        // sorting orders
-//        String sortOrder =
-//                ID + " ASC";
-//        List<User> userList = new ArrayList<User>();
-//        SQLiteDatabase db = this.getReadableDatabase();
-//        Cursor cursor = db.query(TABLE_USER, //Table to query
-//                columns,    //columns to return
-//                null,        //columns for the WHERE clause
-//                null,        //The values for the WHERE clause
-//                null,       //group the rows
-//                null,       //filter by row groups
-//                sortOrder); //The sort order
-//        // Traversing through all rows and adding to list
-//        if (cursor.moveToFirst()) {
-//            do {
-//                User user = new User();
-//                user.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex(ID))));
-//                user.setNpk(cursor.getString(cursor.getColumnIndex(npk)));
-//                user.setName(cursor.getString(cursor.getColumnIndex(name)));
-//                user.setPassword(cursor.getString(cursor.getColumnIndex(password)));
-//                // Adding user record to list
-//                userList.add(user);
-//            } while (cursor.moveToNext());
-//        }
-//        cursor.close();
-//        db.close();
-//        // return user list
-//        return userList;
-//    }
+    public Boolean CekKanbanCust(String hasilScan){
+        String pn_cust = "pn_cust";
+
+        SQLiteDatabase db1 = this.getReadableDatabase();
+        Cursor cursor1 = db1.query(TABLE_PRODUCT,
+                new String[] {pn_cust},
+                pn_cust +"=?",
+                new String[]{hasilScan},null,null,null, null);
+        if (cursor1 != null){
+            return true;
+        }
+        cursor1.close();
+        db1.close();
+        return false;
+
+    }
+
+
+    public String CekKanbanAPI(String hasilScan){
+        String pn_api = "pn_api";
+        String pn_cust = "pn_cust";
+
+        SQLiteDatabase db2 = this.getReadableDatabase();
+        Cursor cursor2 = db2.query(TABLE_PRODUCT,
+                new String[] {pn_cust},
+                pn_api +"=?",
+                new String[]{hasilScan},null,null,null);
+        if (cursor2 != null){
+            Toast.makeText(mContext, cursor2.getString(0), Toast.LENGTH_SHORT).show();
+            return cursor2.getString(0);
+        }
+        cursor2.close();
+        db2.close();
+        return null;
+    }
 }

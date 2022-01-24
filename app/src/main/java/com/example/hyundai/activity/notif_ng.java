@@ -1,4 +1,4 @@
-package com.example.hyundai;
+package com.example.hyundai.activity;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -7,12 +7,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.TextView;
+
+import com.example.hyundai.R;
 
 public class notif_ng extends Dialog implements  View.OnClickListener{
 
     public Activity c;
     public Dialog d;
     public Button next;
+    TextView alasan;
 
     public notif_ng(Activity a) {
         super(a);
@@ -25,7 +29,9 @@ public class notif_ng extends Dialog implements  View.OnClickListener{
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.notif_ng);
-        next = (Button) findViewById(R.id.btnNext);
+
+        alasan = findViewById(R.id.reason);
+        next = findViewById(R.id.btnNext);
         next.setOnClickListener(this);
     }
 
@@ -36,5 +42,7 @@ public class notif_ng extends Dialog implements  View.OnClickListener{
         c.startActivity(intent);
     }
 
+    @Override
+    public void onBackPressed() {    }
 }
 

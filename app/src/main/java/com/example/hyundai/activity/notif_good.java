@@ -1,4 +1,4 @@
-package com.example.hyundai;
+package com.example.hyundai.activity;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+
+import com.example.hyundai.R;
 
 public class notif_good extends Dialog implements  View.OnClickListener{
 
@@ -24,7 +26,7 @@ public class notif_good extends Dialog implements  View.OnClickListener{
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.notif_good);
-        next = (Button) findViewById(R.id.btnNext);
+        next = findViewById(R.id.btnNext);
         next.setOnClickListener(this);
     }
 
@@ -32,6 +34,9 @@ public class notif_good extends Dialog implements  View.OnClickListener{
     public void onClick(View v) {
         dismiss();
     }
+
+    @Override
+    public void onBackPressed() {    }
 
 }
 
