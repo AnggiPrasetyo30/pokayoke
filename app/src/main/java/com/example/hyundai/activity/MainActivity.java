@@ -21,17 +21,17 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-
+    DatabaseHelper mDatabaseHelper;
     TextView output;
     private ArrayList<String> arrayKode = new ArrayList<String>();
-    DatabaseHelper mDatabaseHelper;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         DWUtilities.CreateDWProfile(this);
-        DatabaseHelper mDatabaseHelper = new DatabaseHelper(this);
+        mDatabaseHelper = new DatabaseHelper(this);
 
         output = findViewById(R.id.kodekanban);
         Button btnReset = findViewById(R.id.btnReset);
@@ -48,31 +48,28 @@ public class MainActivity extends AppCompatActivity {
     protected void onNewIntent(Intent intent)
     {
         super.onNewIntent(intent);
-
-        String kanban = null;
-
         String a = displayScanResult(intent);
 
         if (a.length()>25){
-            kanban = GetSubstrCust(a);
-            Toast.makeText(this, kanban, Toast.LENGTH_SHORT).show();
-            if (!mDatabaseHelper.CekKanbanCust(kanban)) {
+            String kanbancus = GetSubstrCust(a);
+            if (!mDatabaseHelper.CekKanbanCust(kanbancus)) {
                 showNotifNotGood();
             } else {
-                addToArray(arrayKode, kanban);
+                addToArray(arrayKode, kanbancus);
+                Log.e("a","KanbanCUS: "+ kanbancus);
             }
         }else {
-            if(mDatabaseHelper.CekKanbanAPI(a)!=null) {
-                Log.e("pn_cust","CekKanbanAPI: "+ kanban);
-                kanban = mDatabaseHelper.CekKanbanAPI(a);
-                addToArray(arrayKode, kanban);
+            String kanban = GetSubstrApi(a);
+            Log.e("pn_cust","KanbanAPI: "+ kanban);
+            if(mDatabaseHelper.CekKanbanAPI(kanban) != null) {
+                Log.e("a","KanbanAPI: "+ kanban);
+                addToArray(arrayKode, mDatabaseHelper.CekKanbanAPI(kanban));
             }else{
                 showNotifNotGood();
             }
         }
-
-        arrayKode.add(kanban);
         output.setText(arrayKode.get(0));
+        Log.e("Output", "onNewIntent: "+ output );
 
         if(arrayKode.size()>1){
             compare();
@@ -112,6 +109,11 @@ public class MainActivity extends AppCompatActivity {
 
     private String GetSubstrCust(String kanban){
         String substring = kanban.substring(4, 17);
+        return substring;
+    }
+
+    private String GetSubstrApi(String kanban){
+        String substring = kanban.substring(8, 25);
         return substring;
     }
 
