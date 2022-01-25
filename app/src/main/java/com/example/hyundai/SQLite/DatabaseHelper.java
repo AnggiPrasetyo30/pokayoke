@@ -140,6 +140,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         if (cursor != null && cursor.moveToFirst()&& cursor.getCount()>0) {
             User user1 = new User(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
+            //user1.setUsergroup(cursor.getString(4));
             if (user.password.equalsIgnoreCase(user1.password)) {
                 return user1;
             }
@@ -149,32 +150,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return null;
     }
 
-//    public Product cekPN_Cust(Product product) {
-//        String pn_api = "pn_api";
-//        String pn_cust = "pn_cust";
-//
-//        try{
-//            createDatabase();
-//        }catch (IOException e){
-//            e.printStackTrace();
-//        }
-//
-//        SQLiteDatabase db = this.getReadableDatabase();
-//        Cursor cursor = db.query(TABLE_PRODUCT,// Selecting Table
-//                new String[]{pn_cust},//Selecting columns want to query
-//                pn_api + "=?",
-//                new String[]{product.pn_api},//Where clause
-//                null, null, null);
-//
-//        if (cursor.moveToFirst() && cursor != null){
-//            Toast.makeText(mContext, cursor.getString(0), Toast.LENGTH_SHORT).show();
-//            return cursor.getString(0);
-//        }
-//        cursor.close();
-//        db.close();
-//        return null;
-//    }
-
     public Boolean CekKanbanCust(String hasilScan){
         String pn_cust = "pn_cust";
 
@@ -183,7 +158,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 new String[] {pn_cust},
                 pn_cust +"=?",
                 new String[]{hasilScan},null,null,null, null);
-        if (cursor1 != null){
+        if (cursor1 != null && cursor1.moveToFirst()&& cursor1.getCount()>0){
             return true;
         }
         cursor1.close();
@@ -194,39 +169,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     public String CekKanbanAPI(String hasilScan){
-        Log.d("TAG", "CekKanbanAPI: " +hasilScan);
         String pn_api = "pn_api";
         String pn_cust = "pn_cust";
 
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(TABLE_PRODUCT,         // Selecting Table
-                new String[]{pn_cust},                  //Selecting columns want to query
-                pn_api + "=?",
-                new String[]{hasilScan},                //Where clause
-                null, null, null);
-
-        if (cursor != null && cursor.moveToFirst() && cursor.getCount()>0){
-            Toast.makeText(mContext, cursor.getString(0), Toast.LENGTH_SHORT).show();
-            return cursor.getString(0);
+        SQLiteDatabase db2 = this.getReadableDatabase();
+        Cursor cursor2 = db2.query(TABLE_PRODUCT,
+                new String[] {pn_cust},
+                pn_api +"=?",
+                new String[]{hasilScan},null,null,null);
+        if (cursor2 != null && cursor2.moveToFirst()&& cursor2.getCount()>0){
+           // Toast.makeText(mContext, cursor2.getString(0), Toast.LENGTH_SHORT).show();
+            return cursor2.getString(0);
         }
-        cursor.close();
-        db.close();
+        cursor2.close();
+        db2.close();
         return null;
-
-//        SQLiteDatabase db2 = this.getReadableDatabase();
-//        Cursor c = db2.rawQuery("SELECT pn_cust FROM product WHERE pn_api =?", new String[]{hasilScan});
-//        if (c.moveToLast()) {
-//            hasilScan
-//        }
-//        Cursor cursor2 = db2.query(TABLE_PRODUCT,
-//                new String[] {pn_cust},
-//                pn_api +"=?",
-//                new String[]{hasilScan},null,null,null);
-//        if (cursor2 != null){
-//            Toast.makeText(mContext, cursor2.getString(0), Toast.LENGTH_SHORT).show();
-//            return cursor2.getString(0);
-//        }
-//        cursor2.close();
-
     }
 }

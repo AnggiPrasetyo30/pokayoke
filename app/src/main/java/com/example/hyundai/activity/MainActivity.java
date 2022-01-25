@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     DatabaseHelper mDatabaseHelper;
     TextView output;
     private ArrayList<String> arrayKode = new ArrayList<String>();
+    String pn_api, pn_hyundai;
 
 
     @Override
@@ -50,30 +51,44 @@ public class MainActivity extends AppCompatActivity {
         super.onNewIntent(intent);
         String a = displayScanResult(intent);
 
+
         if (a.length()>25){
-            String kanbancus = GetSubstrCust(a);
-            if (!mDatabaseHelper.CekKanbanCust(kanbancus)) {
-                showNotifNotGood();
+            String kanban = GetSubstrCust(a);
+            addToArray(arrayKode, kanban);
+            /*if (!mDatabaseHelper.CekKanbanCust(kanban)) {
+                showNotifNotGood(); // alasan : data tidak ditemukan
             } else {
-                addToArray(arrayKode, kanbancus);
-                Log.e("a","KanbanCUS: "+ kanbancus);
-            }
+                pn_hyundai = kanban;
+                output.setText(pn_hyundai);
+                addToArray(arrayKode, kanban);
+
+            }*/
         }else {
             String kanban = GetSubstrApi(a);
-            Log.e("pn_cust","KanbanAPI: "+ kanban);
             if(mDatabaseHelper.CekKanbanAPI(kanban) != null) {
-                Log.e("a","KanbanAPI: "+ kanban);
+                pn_api = mDatabaseHelper.CekKanbanAPI(kanban);
+                output.setText(pn_api);
                 addToArray(arrayKode, mDatabaseHelper.CekKanbanAPI(kanban));
             }else{
-                showNotifNotGood();
+                showNotifNotGood(); // alasan : data tidak ditemukan
             }
         }
-        output.setText(arrayKode.get(0));
-        Log.e("Output", "onNewIntent: "+ output );
+        //output.setText(arrayKode.get(0));
+        //Log.e("Output", "onNewIntent: "+ output );
 
-        if(arrayKode.size()>1){
-            compare();
+        if (arrayKode.size()>1) {
+            if (arrayKode.get(1).contains(arrayKode.get(0))) {
+                showNotifGood();
+            } else {
+                showNotifNotGood();
+            }
+        }else {
+
         }
+
+        /*if(arrayKode.size()>1){
+            compare();
+        }*/
     }
 
     private String displayScanResult(Intent scanIntent)
@@ -108,14 +123,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private String GetSubstrCust(String kanban){
-        String substring = kanban.substring(4, 17);
-        return substring;
+        return kanban.substring(4, 17);
     }
 
     private String GetSubstrApi(String kanban){
-        String substring = kanban.substring(8, 25);
-        return substring;
+        return kanban.substring(8, 25);
     }
+
+    /*private Boolean CekKonten (String a, String b){
+        return a.contains(b);
+    }*/
 
     private void addToArray(ArrayList arrayList, String input){
         arrayList.add(input);
