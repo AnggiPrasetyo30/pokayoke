@@ -19,7 +19,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import static android.accounts.AccountManager.KEY_PASSWORD;
@@ -33,6 +35,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static final String TABLE_USER = "user";
     public static final String TABLE_PRODUCT = "product";
+    public static final String TABLE_SHOPPING = "shopping";
+
 
 
     public DatabaseHelper(Context context) {
@@ -150,7 +154,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return null;
     }
 
-    public Boolean CekKanbanCust(String hasilScan){
+   /* public Boolean CekKanbanCust(String hasilScan){
         String pn_cust = "pn_cust";
 
         SQLiteDatabase db1 = this.getReadableDatabase();
@@ -165,8 +169,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db1.close();
         return false;
 
-    }
-
+    }*/
 
     public String CekKanbanAPI(String hasilScan){
         String pn_api = "pn_api";
@@ -183,6 +186,36 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         cursor2.close();
         db2.close();
+        return null;
+    }
+
+    public shopping InsertResult(shopping shop){
+        String npk = "npk";
+        String customer = "customer";
+        String kanban_api = "kanban_api";
+        String kanban_cust = "kanban_cust";
+        String hasil = "hasil";
+        String datetime = "datetime";
+        String data_api = "data_api";
+        String data_cust = "data_cuat";
+        String TRIAL857 = "TRIAL857";
+
+        SQLiteDatabase dbi = this.getWritableDatabase();
+
+        //put value yang akan di insert
+        ContentValues values = new ContentValues();
+        values.put(npk, shop.getNpk());
+        values.put(customer, shop.getCustomer());
+        values.put(kanban_api, shop.getKanban_api());
+        values.put(kanban_cust, shop.getKanban_cust());
+        values.put(hasil, shop.getHasil());
+        values.put(datetime, shop.getDatetime());
+        values.put(data_api, shop.getData_api());
+        values.put(data_cust, shop.getData_cust());
+        values.put(TRIAL857, shop.getTRIAL857());
+
+        long newRowId = dbi.insert(TABLE_SHOPPING, null, values);
+
         return null;
     }
 }

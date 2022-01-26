@@ -14,17 +14,20 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.hyundai.R;
+import com.example.hyundai.SQLite.shopping;
 import com.example.hyundai.Scanner.DWUtilities;
 import com.example.hyundai.SQLite.DatabaseHelper;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
     DatabaseHelper mDatabaseHelper;
     TextView output;
     private ArrayList<String> arrayKode = new ArrayList<String>();
-    String pn_api, pn_hyundai;
+    String pn_api, pn_cust, data_api, data_cust;
+    int hasilScan;
 
 
     @Override
@@ -33,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         DWUtilities.CreateDWProfile(this);
         mDatabaseHelper = new DatabaseHelper(this);
+
+        hasilScan = 0;
 
         output = findViewById(R.id.kodekanban);
         Button btnReset = findViewById(R.id.btnReset);
@@ -52,43 +57,43 @@ public class MainActivity extends AppCompatActivity {
         String a = displayScanResult(intent);
 
 
-        if (a.length()>25){
-            String kanban = GetSubstrCust(a);
-            addToArray(arrayKode, kanban);
-            /*if (!mDatabaseHelper.CekKanbanCust(kanban)) {
-                showNotifNotGood(); // alasan : data tidak ditemukan
-            } else {
-                pn_hyundai = kanban;
-                output.setText(pn_hyundai);
-                addToArray(arrayKode, kanban);
-
-            }*/
+        if (a.length()==32){
+            data_cust = a;
+            String kanban = GetSubstrCustBack(a);
+            output.setText(kanban);
+            pn_cust = kanban;
+            hasilScan++;
+        }else if(a.length() == 29){
+            data_cust = a;
+            String kanban = GetSubstrCustFront(a);
+            output.setText(kanban);
+            pn_cust = kanban;
+            hasilScan++;
         }else {
+            data_api = a;
             String kanban = GetSubstrApi(a);
             if(mDatabaseHelper.CekKanbanAPI(kanban) != null) {
                 pn_api = mDatabaseHelper.CekKanbanAPI(kanban);
                 output.setText(pn_api);
-                addToArray(arrayKode, mDatabaseHelper.CekKanbanAPI(kanban));
+                hasilScan++;
             }else{
                 showNotifNotGood(); // alasan : data tidak ditemukan
             }
         }
-        //output.setText(arrayKode.get(0));
-        //Log.e("Output", "onNewIntent: "+ output );
 
-        if (arrayKode.size()>1) {
-            if (arrayKode.get(1).contains(arrayKode.get(0))) {
+        if (hasilScan>1) {
+            if (pn_cust.contains(pn_api)) {
                 showNotifGood();
+                mDatabaseHelper.InsertResult(new shopping(null, null, pn_api, pn_cust, "OK", String.valueOf(Calendar.getInstance().getTime()), data_api, data_cust, null  ));
+                hasilScan = 0;
+                output.setText(R.string.kode_kanban);
             } else {
                 showNotifNotGood();
+                arrayKode.clear();
             }
         }else {
 
         }
-
-        /*if(arrayKode.size()>1){
-            compare();
-        }*/
     }
 
     private String displayScanResult(Intent scanIntent)
@@ -122,17 +127,17 @@ public class MainActivity extends AppCompatActivity {
         cdd.setCanceledOnTouchOutside(false);
     }
 
-    private String GetSubstrCust(String kanban){
+    private String GetSubstrCustBack(String kanban){
         return kanban.substring(4, 17);
+    }
+
+    private String GetSubstrCustFront(String kanban){
+        return kanban.substring(4, 14);
     }
 
     private String GetSubstrApi(String kanban){
         return kanban.substring(8, 25);
     }
-
-    /*private Boolean CekKonten (String a, String b){
-        return a.contains(b);
-    }*/
 
     private void addToArray(ArrayList arrayList, String input){
         arrayList.add(input);
