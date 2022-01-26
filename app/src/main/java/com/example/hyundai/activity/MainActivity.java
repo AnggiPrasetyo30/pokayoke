@@ -51,19 +51,17 @@ public class MainActivity extends AppCompatActivity {
         super.onNewIntent(intent);
         String a = displayScanResult(intent);
 
-
-        if (a.length()>25){
-            String kanban = GetSubstrCust(a);
+        if (a.length() == 32){
+            String kanban = GetSubstrCustBack(a);
+            output.setText(kanban);
             addToArray(arrayKode, kanban);
-            /*if (!mDatabaseHelper.CekKanbanCust(kanban)) {
-                showNotifNotGood(); // alasan : data tidak ditemukan
-            } else {
-                pn_hyundai = kanban;
-                output.setText(pn_hyundai);
-                addToArray(arrayKode, kanban);
-
-            }*/
-        }else {
+        } else if (a.length() == 29 ) {
+            String kanban = GetSubstrCustFront(a);
+            output.setText(kanban);
+            addToArray(arrayKode, kanban);
+        }
+        else
+        {
             String kanban = GetSubstrApi(a);
             if(mDatabaseHelper.CekKanbanAPI(kanban) != null) {
                 pn_api = mDatabaseHelper.CekKanbanAPI(kanban);
@@ -73,11 +71,8 @@ public class MainActivity extends AppCompatActivity {
                 showNotifNotGood(); // alasan : data tidak ditemukan
             }
         }
-        //output.setText(arrayKode.get(0));
-        //Log.e("Output", "onNewIntent: "+ output );
-
         if (arrayKode.size()>1) {
-            if (arrayKode.get(1).contains(arrayKode.get(0))) {
+            if (arrayKode.get(0).contains(arrayKode.get(1))) {
                 showNotifGood();
             } else {
                 showNotifNotGood();
@@ -122,8 +117,12 @@ public class MainActivity extends AppCompatActivity {
         cdd.setCanceledOnTouchOutside(false);
     }
 
-    private String GetSubstrCust(String kanban){
+    private String GetSubstrCustBack(String kanban){
         return kanban.substring(4, 17);
+    }
+
+    private String GetSubstrCustFront(String kanban){
+        return kanban.substring(4, 14);
     }
 
     private String GetSubstrApi(String kanban){
