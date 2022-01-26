@@ -84,7 +84,15 @@ public class MainActivity extends AppCompatActivity {
         if (hasilScan>1) {
             if (pn_cust.contains(pn_api)) {
                 showNotifGood();
-                mDatabaseHelper.InsertResult(new shopping(null, null, pn_api, pn_cust, "OK", String.valueOf(Calendar.getInstance().getTime()), data_api, data_cust, null  ));
+                mDatabaseHelper.InsertResult(new shopping(
+                        "1503",
+                        "Hyundai",
+                         pn_api, pn_cust,
+                        "OK",
+                         String.valueOf(Calendar.getInstance().getTime()),
+                         data_api,
+                         data_cust,
+                        "T"));
                 hasilScan = 0;
                 output.setText(R.string.kode_kanban);
             } else {
@@ -100,17 +108,6 @@ public class MainActivity extends AppCompatActivity {
     {
         String decodedData = scanIntent.getStringExtra(getResources().getString(R.string.datawedge_intent_key_data));
         return decodedData;
-    }
-
-    private void compare(){
-        if(arrayKode.get(0).compareTo(arrayKode.get(1))==0){
-            showNotifGood();
-            arrayKode = new ArrayList<>();
-            output.setText(R.string.kode_kanban);
-        }else{
-            showNotifNotGood();{
-            }
-        }
     }
 
     private void showNotifNotGood() {

@@ -24,7 +24,6 @@ public class Login extends AppCompatActivity {
     Button btnLogin;
 
     private final static String NPK = "npk";
-    private final static String PASSWORD = "password";
     private final static String NAMA = "name";
 
     DatabaseHelper mDatabaseHelper;
@@ -73,7 +72,7 @@ public class Login extends AppCompatActivity {
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                     }else{
-                        Intent intent=new Intent(Login.this,SelectScannerLeader.class);
+                        Intent intent=new Intent(Login.this,Leader.class);
                         intent.putExtra(NPK, currentUser.getNpk());
                         intent.putExtra(NAMA, currentUser.getName());
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);

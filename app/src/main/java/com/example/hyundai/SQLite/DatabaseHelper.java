@@ -154,23 +154,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return null;
     }
 
-   /* public Boolean CekKanbanCust(String hasilScan){
-        String pn_cust = "pn_cust";
-
-        SQLiteDatabase db1 = this.getReadableDatabase();
-        Cursor cursor1 = db1.query(TABLE_PRODUCT,
-                new String[] {pn_cust},
-                pn_cust +"=?",
-                new String[]{hasilScan},null,null,null, null);
-        if (cursor1 != null && cursor1.moveToFirst()&& cursor1.getCount()>0){
-            return true;
-        }
-        cursor1.close();
-        db1.close();
-        return false;
-
-    }*/
-
     public String CekKanbanAPI(String hasilScan){
         String pn_api = "pn_api";
         String pn_cust = "pn_cust";
@@ -190,6 +173,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public shopping InsertResult(shopping shop){
+        //String id = "id";
         String npk = "npk";
         String customer = "customer";
         String kanban_api = "kanban_api";
@@ -197,13 +181,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String hasil = "hasil";
         String datetime = "datetime";
         String data_api = "data_api";
-        String data_cust = "data_cuat";
+        String data_cust = "data_cust";
         String TRIAL857 = "TRIAL857";
 
         SQLiteDatabase dbi = this.getWritableDatabase();
 
         //put value yang akan di insert
         ContentValues values = new ContentValues();
+        //values.put(id, shop.getId());
         values.put(npk, shop.getNpk());
         values.put(customer, shop.getCustomer());
         values.put(kanban_api, shop.getKanban_api());
@@ -216,6 +201,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         long newRowId = dbi.insert(TABLE_SHOPPING, null, values);
 
-        return null;
+        return shop;
     }
 }
