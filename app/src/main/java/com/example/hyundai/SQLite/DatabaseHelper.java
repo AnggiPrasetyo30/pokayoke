@@ -19,6 +19,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.math.BigInteger;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -123,12 +124,39 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+//    public Product ProductHyundai(Product product) {
+//        String station_num = "station_num";
+//        String sku = "sku";
+//        String part_name = "part_name";
+//        String position = "position";
+//        String pn_api = "pn_api";
+//        String pn_cust = "pn_cust";
+//        BigInteger ptloc = "";
+//        BigInteger sfgwh
+//        BigInteger fgwh
+//        BigInteger nkiwh
+//        String type
+//        String customer
+//        String cust_id
+//        String supplier_id
+//        String job_num
+//        String address
+//        Integer time_production
+//        Integer qty_packaging
+//        Integer qty_child
+//        String goods
+//        String line_prod
+//        BigInteger seq_qr
+//        BigInteger seq_data_part
+//    }
+
     public User Authenticate(User user) {
         String name = "name";
         String npk = "npk";
         String username = "username";
         String password = "password";
         String usergroup = "usergroup";
+        String trial857 = "TRIAL857";
 
         try{
             createDatabase();
@@ -137,13 +165,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_USER,// Selecting Table
-                new String[]{name, npk, username, password, usergroup},//Selecting columns want to query
+                new String[]{name, npk, username, password, usergroup, trial857},//Selecting columns want to query
                 npk + "=?",
                 new String[]{user.npk},//Where clause
                 null, null, null);
 
         if (cursor != null && cursor.moveToFirst()&& cursor.getCount()>0) {
-            User user1 = new User(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
+            User user1 = new User(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5));
             //user1.setUsergroup(cursor.getString(4));
             if (user.password.equalsIgnoreCase(user1.password)) {
                 return user1;
@@ -153,23 +181,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return null;
     }
-
-   /* public Boolean CekKanbanCust(String hasilScan){
-        String pn_cust = "pn_cust";
-
-        SQLiteDatabase db1 = this.getReadableDatabase();
-        Cursor cursor1 = db1.query(TABLE_PRODUCT,
-                new String[] {pn_cust},
-                pn_cust +"=?",
-                new String[]{hasilScan},null,null,null, null);
-        if (cursor1 != null && cursor1.moveToFirst()&& cursor1.getCount()>0){
-            return true;
-        }
-        cursor1.close();
-        db1.close();
-        return false;
-
-    }*/
 
     public String CekKanbanAPI(String hasilScan){
         String pn_api = "pn_api";
@@ -189,6 +200,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return null;
     }
 
+    public String CekCustomer(String hasilScan){
+        String pn_api = "pn_api";
+        String customer = "customer";
+
+        SQLiteDatabase db2 = this.getReadableDatabase();
+        Cursor cursor2 = db2.query(TABLE_PRODUCT,
+                new String[] {customer},
+                pn_api +"=?",
+                new String[]{hasilScan},null,null,null);
+        if (cursor2 != null && cursor2.moveToFirst()&& cursor2.getCount()>0){
+                return cursor2.getString(0);
+        }
+        cursor2.close();
+        db2.close();
+        return null;
+    }
+
     public shopping InsertResult(shopping shop){
         String npk = "npk";
         String customer = "customer";
@@ -197,7 +225,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String hasil = "hasil";
         String datetime = "datetime";
         String data_api = "data_api";
-        String data_cust = "data_cuat";
+        String data_cust = "data_cust";
         String TRIAL857 = "TRIAL857";
 
         SQLiteDatabase dbi = this.getWritableDatabase();

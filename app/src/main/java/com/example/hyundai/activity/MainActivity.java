@@ -1,6 +1,7 @@
 package com.example.hyundai.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -26,9 +27,14 @@ public class MainActivity extends AppCompatActivity {
     DatabaseHelper mDatabaseHelper;
     TextView output;
     private ArrayList<String> arrayKode = new ArrayList<String>();
-    String pn_api, pn_cust, data_api, data_cust;
+    String pn_api, pn_cust, data_api, data_cust, customer;
     int hasilScan;
 
+    private String GNPK;
+    private String GTRIAL;
+
+    private final static String NPK = "npk";
+    private final static String TRIAL = "trial";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,6 +42,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         DWUtilities.CreateDWProfile(this);
         mDatabaseHelper = new DatabaseHelper(this);
+
+        Intent intent2 = getIntent();
+        GNPK = intent2.getStringExtra(NPK);
+        GTRIAL = intent2.getStringExtra(TRIAL);
 
         hasilScan = 0;
 
@@ -55,6 +65,8 @@ public class MainActivity extends AppCompatActivity {
     {
         super.onNewIntent(intent);
         String a = displayScanResult(intent);
+        String npk = GNPK;
+        String trial = GTRIAL;
 
 
         if (a.length()==32){
@@ -74,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
             String kanban = GetSubstrApi(a);
             if(mDatabaseHelper.CekKanbanAPI(kanban) != null) {
                 pn_api = mDatabaseHelper.CekKanbanAPI(kanban);
+                customer = mDatabaseHelper.CekCustomer(kanban);
                 output.setText(pn_api);
                 hasilScan++;
             }else{
@@ -84,7 +97,9 @@ public class MainActivity extends AppCompatActivity {
         if (hasilScan>1) {
             if (pn_cust.contains(pn_api)) {
                 showNotifGood();
-                mDatabaseHelper.InsertResult(new shopping(null, null, pn_api, pn_cust, "OK", String.valueOf(Calendar.getInstance().getTime()), data_api, data_cust, null  ));
+                mDatabaseHelper.InsertResult(new shopping(npk, customer, pn_api, pn_cust,
+                        "OK", String.valueOf(Calendar.getInstance().getTime()), data_api,
+                        data_cust, trial  ));
                 hasilScan = 0;
                 output.setText(R.string.kode_kanban);
             } else {
@@ -92,7 +107,9 @@ public class MainActivity extends AppCompatActivity {
                 arrayKode.clear();
             }
         }else {
-
+                if (pn_api.equals(pn_api)) {
+                    showNotifNotGood();
+                }
         }
     }
 

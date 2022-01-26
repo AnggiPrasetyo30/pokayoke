@@ -12,7 +12,9 @@ public class shopping {
     public String data_cust;
     public String TRIAL857;
 
-    public shopping(String npk, String customer, String kanban_api, String kanban_cust, String hasil, String datetime, String data_api, String data_cust, String TRIAL857) {
+    public shopping(String npk, String customer, String kanban_api,
+                    String kanban_cust, String hasil, String datetime,
+                    String data_api, String data_cust, String TRIAL857) {
         this.npk = npk;
         this.customer = customer;
         this.kanban_api = kanban_api;

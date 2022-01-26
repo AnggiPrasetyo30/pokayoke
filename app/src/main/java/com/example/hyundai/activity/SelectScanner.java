@@ -26,7 +26,7 @@ public class SelectScanner extends AppCompatActivity {
     private final static String APP_NAME= "POKAYOKE";
     private final static String NPK = "npk";
     private final static String NAMA = "name";
-    private final static String ID = "id";
+    private final static String TRIAL = "trial";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,23 +41,23 @@ public class SelectScanner extends AppCompatActivity {
 
         Intent intent2 = getIntent();
         String  Gnama = intent2.getStringExtra(NAMA);
+        String GNPK = intent2.getStringExtra(NPK);
+        String GTRIAL = intent2.getStringExtra(TRIAL);
 
         mNama.setText(Gnama);
 
         logout.setOnClickListener(view ->{
-            SharedPreferences sharedpreferences = getSharedPreferences(Login.MyPREFERENCES, Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.clear();
-            editor.commit();
             Intent intent = new Intent(SelectScanner.this, Login.class);
+            finish();
             startActivity(intent);
             finish();
         });
 
         card1.setOnClickListener(view -> {
             Intent intent = new Intent(SelectScanner.this, MainActivity.class);
+            intent.putExtra(NPK, GNPK);
+            intent.putExtra(TRIAL, GTRIAL);
             startActivity(intent);
-            Toast.makeText(SelectScanner.this, "asal", Toast.LENGTH_SHORT).show();
         });
 
         card2.setOnClickListener(view -> {

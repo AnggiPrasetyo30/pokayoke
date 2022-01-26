@@ -38,7 +38,11 @@ public class notif_ng extends Dialog implements  View.OnClickListener{
     @Override
     public void onClick(View v) {
         // ganti dengan fungsi logout + intent ke halaman login
+
         Intent intent = new Intent(getContext(), Login.class );
+        c.finish();
+        c.isDestroyed();
+        c.isFinishing();
         c.startActivity(intent);
     }
 
