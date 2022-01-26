@@ -2,6 +2,15 @@ package com.example.hyundai.SQLite;
 
 public class shopping {
 
+    /*public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String id;*/
     public String npk;
     public String customer;
     public String kanban_api;
@@ -12,9 +21,14 @@ public class shopping {
     public String data_cust;
     public String TRIAL857;
 
+<<<<<<< HEAD
     public shopping(String npk, String customer, String kanban_api,
                     String kanban_cust, String hasil, String datetime,
                     String data_api, String data_cust, String TRIAL857) {
+=======
+    public shopping(String npk, String customer, String kanban_api, String kanban_cust, String hasil, String datetime, String data_api, String data_cust, String TRIAL857) {
+        //this.id = id;
+>>>>>>> e1340205e5c577415e70ca49e7aa8d66f4e4ac55
         this.npk = npk;
         this.customer = customer;
         this.kanban_api = kanban_api;

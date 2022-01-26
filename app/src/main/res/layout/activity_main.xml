@@ -103,10 +103,10 @@
         android:text="@string/reset"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/txtOutput"
+        app:layout_constraintEnd_toEndOf="@+id/kodekanban"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/kodekanban"
-        app:layout_constraintTop_toBottomOf="@+id/txtOutput"
+        app:layout_constraintTop_toBottomOf="@+id/kodekanban"
         app:layout_constraintVertical_bias="0.963" />
 
 

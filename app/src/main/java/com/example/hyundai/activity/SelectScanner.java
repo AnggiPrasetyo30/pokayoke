@@ -23,6 +23,7 @@ public class SelectScanner extends AppCompatActivity {
     CardView card1, card2;
 
     SharedPreferences mSharedPreferences;
+    public static final String MyPREFERENCES = "MyPrefs" ;
     private final static String APP_NAME= "POKAYOKE";
     private final static String NPK = "npk";
     private final static String NAMA = "name";
@@ -32,7 +33,7 @@ public class SelectScanner extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_scanner);
-        mSharedPreferences = getSharedPreferences(APP_NAME, MODE_PRIVATE);
+        mSharedPreferences = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
 
         logout = findViewById(R.id.btnlogout);
         mNama = findViewById(R.id.nama_user);

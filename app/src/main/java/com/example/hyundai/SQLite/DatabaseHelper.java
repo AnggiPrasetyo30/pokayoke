@@ -218,6 +218,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public shopping InsertResult(shopping shop){
+        //String id = "id";
         String npk = "npk";
         String customer = "customer";
         String kanban_api = "kanban_api";
@@ -232,6 +233,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         //put value yang akan di insert
         ContentValues values = new ContentValues();
+        //values.put(id, shop.getId());
         values.put(npk, shop.getNpk());
         values.put(customer, shop.getCustomer());
         values.put(kanban_api, shop.getKanban_api());
@@ -244,6 +246,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         long newRowId = dbi.insert(TABLE_SHOPPING, null, values);
 
-        return null;
+        return shop;
     }
 }
