@@ -153,6 +153,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String password = "password";
         String usergroup = "usergroup";
         String trial857 = "TRIAL857";
+        String status_akun = "status_akun";
 
         try{
             createDatabase();
@@ -161,14 +162,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_USER,// Selecting Table
-                new String[]{name, npk, username, password, usergroup, trial857},//Selecting columns want to query
+                new String[]{name, npk, username, password, usergroup, trial857, status_akun},    //Selecting columns want to query
                 npk + "=?",
                 new String[]{user.npk},//Where clause
                 null, null, null);
 
         if (cursor != null && cursor.moveToFirst()&& cursor.getCount()>0) {
-            User user1 = new User(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5));
-            //user1.setUsergroup(cursor.getString(4));
+            User user1 = new User(cursor.getString(0), cursor.getString(1), cursor.getString(2),
+                    cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getInt(6));
             if (user.password.equalsIgnoreCase(user1.password)) {
                 return user1;
             }
@@ -255,6 +256,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         if (cursor != null && cursor.moveToFirst()&& cursor.getCount()>0) {
            return false;
+        }
+        cursor.close();
+        dbc.close();
+        return true;
+
+    }
+
+    public Boolean cekOnResultC(String pn2){
+        String cek_data_cust = "data_cust";
+
+        SQLiteDatabase dbc = this.getReadableDatabase();
+        Cursor cursor = dbc.query(TABLE_SHOPPING,// Selecting Table
+                new String[]{cek_data_cust},//Selecting columns want to query
+                cek_data_cust + "=?",
+                new String[]{pn2},//Where clause
+                null, null, null);
+
+        if (cursor != null && cursor.moveToFirst()&& cursor.getCount()>0) {
+            return false;
         }
         cursor.close();
         dbc.close();

@@ -21,7 +21,9 @@ public class User {
     public Date created_at;
     public Date updated_at;*/
 
-    public User(String name, String npk, String username, String password, String usergroup, String trial857) {
+    public User(String name, String npk, String username,
+                String password, String usergroup, String trial857,
+                Integer status_akun) {
 
         //this.id = id;
         this.npk = npk;
@@ -30,6 +32,7 @@ public class User {
         this.name = name;
         this.usergroup = usergroup;
         this.trial857 = trial857;
+        this.status_akun = status_akun;
         /*this.rfid_tag = rfid_tag;
         this.department_id = department_id;
         this.op_skill = op_skill;
@@ -39,6 +42,7 @@ public class User {
         this.updated_at = updated_at;*/
 
     }
+
 
     public String getTrial857() {
         return trial857;

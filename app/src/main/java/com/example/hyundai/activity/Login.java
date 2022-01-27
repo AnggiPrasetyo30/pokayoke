@@ -44,10 +44,10 @@ public class Login extends AppCompatActivity {
                 String npk = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
 
-                User currentUser = mDatabaseHelper.Authenticate(new User(null,npk, null, password, null, null));
+                User currentUser = mDatabaseHelper.Authenticate(new User(null,npk, null, password, null, null, 0));
 
                 if (currentUser != null) {
-                    if (currentUser.getUsergroup().equals("Operator")){
+                    if (currentUser.getUsergroup().equals("Operator") && currentUser.getStatus_akun()==0){
                         Intent intent=new Intent(Login.this,SelectScanner.class);
                         intent.putExtra(NPK, currentUser.getNpk());
                         intent.putExtra(NAMA, currentUser.getName());
@@ -56,7 +56,7 @@ public class Login extends AppCompatActivity {
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                     }else{
-                        Intent intent=new Intent(Login.this,Leader.class);
+                        Intent intent=new Intent(Login.this,locked.class);
                         intent.putExtra(NPK, currentUser.getNpk());
                         intent.putExtra(NAMA, currentUser.getName());
                         intent.putExtra(TRIAL, currentUser.getTrial857());

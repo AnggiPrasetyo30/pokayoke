@@ -26,15 +26,9 @@ public class MainActivity extends AppCompatActivity {
 
     DatabaseHelper mDatabaseHelper;
     TextView output;
-<<<<<<< HEAD
-    private ArrayList<String> arrayKode = new ArrayList<String>();
-    String pn_api, pn_cust, data_api, data_cust, customer;
-    int hasilScan;
 
-    private String GNPK;
-    private String GTRIAL;
-
-=======
+    //untuk menyimpan alasan NG
+    public static String alasan_NG;
 
     //variabel yang akan diinput kedalam tabel result
     String pn_api, pn_cust, customer;
@@ -49,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
     private String GTRIAL;
 
     //nama string yang dilempar pada intent
->>>>>>> 41d14a5 (27-01-2022)
     private final static String NPK = "npk";
     private final static String TRIAL = "trial";
 
@@ -108,46 +101,18 @@ public class MainActivity extends AppCompatActivity {
                 output.setText(pn_api);
                 hasilScan++;
             } else {
+                alasan_NG = "Kanban tidak ditemukan";
                 showNotifNotGood(); // alasan : data tidak ditemukan
             }
         }
 
-<<<<<<< HEAD
-        if (hasilScan>1) {
-            if (pn_cust.contains(pn_api)) {
-                showNotifGood();
-<<<<<<< HEAD
-                mDatabaseHelper.InsertResult(new shopping(npk, customer, pn_api, pn_cust,
-                        "OK", String.valueOf(Calendar.getInstance().getTime()), data_api,
-                        data_cust, trial  ));
-=======
-                mDatabaseHelper.InsertResult(new shopping(
-                        "1503",
-                        "Hyundai",
-                         pn_api, pn_cust,
-                        "OK",
-                         String.valueOf(Calendar.getInstance().getTime()),
-                         data_api,
-                         data_cust,
-                        "T"));
->>>>>>> e1340205e5c577415e70ca49e7aa8d66f4e4ac55
-                hasilScan = 0;
-                output.setText(R.string.kode_kanban);
-            } else {
-                showNotifNotGood();
-                arrayKode.clear();
-            }
-        }else {
-                if (pn_api.equals(pn_api)) {
-                    showNotifNotGood();
-                }
-=======
-        if(pn_api!=null) {
-            if (!mDatabaseHelper.cekOnResult(data_api)) {
+        if(pn_api!=null&&pn_cust!=null) {
+            if (!mDatabaseHelper.cekOnResult(data_api) && !mDatabaseHelper.cekOnResultC(data_cust)) {
 
                     mDatabaseHelper.InsertResult(new shopping(npk, customer, pn_api, pn_cust,
                         "Double", String.valueOf(Calendar.getInstance().getTime()), data_api, data_cust, trial));
 
+                    alasan_NG = "Data kanban dobel";
                     showNotifNotGood();
                     pn_api=null;
                     hasilScan = 0;
@@ -162,12 +127,13 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     mDatabaseHelper.InsertResult(new shopping(npk, customer, pn_api, pn_cust,
                             "NG", String.valueOf(Calendar.getInstance().getTime()), data_api, data_cust, trial));
+
+                    alasan_NG = "Kanban tidak cocok";
                     pn_api=null;
                     showNotifNotGood();
                     hasilScan = 0;
                 }
             }
->>>>>>> 41d14a5 (27-01-2022)
         }
     }
 

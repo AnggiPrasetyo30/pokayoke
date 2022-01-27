@@ -31,6 +31,7 @@ public class notif_ng extends Dialog implements  View.OnClickListener{
         setContentView(R.layout.notif_ng);
 
         alasan = findViewById(R.id.reason);
+        alasan.setText(MainActivity.alasan_NG);
         next = findViewById(R.id.btnNext);
         next.setOnClickListener(this);
     }
