@@ -213,7 +213,7 @@
         android:id="@+id/btnCreate"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="36dp"
         android:backgroundTint="#000000"
         android:text="TAMBAH PRODUCT"
         android:textColor="@color/white"
@@ -239,7 +239,6 @@
         android:backgroundTint="#000000"
         android:text="HAPUS PRODUK"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/btnUpdate"
         app:layout_constraintTop_toBottomOf="@+id/btnUpdate"
         app:layout_constraintVertical_bias="0.0" />

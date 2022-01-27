@@ -90,11 +90,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         try{
             final String mPath = DB_PATH + DB_name;
             final File file = new File(mPath);
-            if (file.exists()){
-                return true;
-            }else{
-                return false;
-            }
+            return file.exists();
         }catch (SQLiteException e){
             e.printStackTrace();
             return false;
@@ -218,7 +214,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public shopping InsertResult(shopping shop){
-        //String id = "id";
         String npk = "npk";
         String customer = "customer";
         String kanban_api = "kanban_api";
@@ -233,7 +228,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         //put value yang akan di insert
         ContentValues values = new ContentValues();
-        //values.put(id, shop.getId());
         values.put(npk, shop.getNpk());
         values.put(customer, shop.getCustomer());
         values.put(kanban_api, shop.getKanban_api());
@@ -247,5 +241,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         long newRowId = dbi.insert(TABLE_SHOPPING, null, values);
 
         return shop;
+    }
+
+    public Boolean cekOnResult(String pn){
+        String cek_data_api = "data_api";
+
+        SQLiteDatabase dbc = this.getReadableDatabase();
+        Cursor cursor = dbc.query(TABLE_SHOPPING,// Selecting Table
+                new String[]{cek_data_api},//Selecting columns want to query
+                cek_data_api + "=?",
+                new String[]{pn},//Where clause
+                null, null, null);
+
+        if (cursor != null && cursor.moveToFirst()&& cursor.getCount()>0) {
+           return false;
+        }
+        cursor.close();
+        dbc.close();
+        return true;
+
     }
 }

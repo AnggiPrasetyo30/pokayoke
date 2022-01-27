@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     DatabaseHelper mDatabaseHelper;
     TextView output;
+<<<<<<< HEAD
     private ArrayList<String> arrayKode = new ArrayList<String>();
     String pn_api, pn_cust, data_api, data_cust, customer;
     int hasilScan;
@@ -33,6 +34,22 @@ public class MainActivity extends AppCompatActivity {
     private String GNPK;
     private String GTRIAL;
 
+=======
+
+    //variabel yang akan diinput kedalam tabel result
+    String pn_api, pn_cust, customer;
+    String data_api = null;
+    String data_cust = null;
+
+    //untuk menghitung sudah berapa kali scan
+    int hasilScan;
+
+    //untuk menampung value dari intent
+    private String GNPK;
+    private String GTRIAL;
+
+    //nama string yang dilempar pada intent
+>>>>>>> 41d14a5 (27-01-2022)
     private final static String NPK = "npk";
     private final static String TRIAL = "trial";
 
@@ -55,45 +72,47 @@ public class MainActivity extends AppCompatActivity {
 
         btnReset.setOnClickListener(view -> {
             output.setText(R.string.kode_kanban);
-            arrayKode = new ArrayList<>();
+            hasilScan = 0;
+            pn_cust = null;
+            pn_api = null;
         });
 
     }
 
     @Override
-    protected void onNewIntent(Intent intent)
-    {
+    protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         String a = displayScanResult(intent);
         String npk = GNPK;
         String trial = GTRIAL;
 
 
-        if (a.length()==32){
+        if (a.length() == 32) {
             data_cust = a;
             String kanban = GetSubstrCustBack(a);
             output.setText(kanban);
             pn_cust = kanban;
             hasilScan++;
-        }else if(a.length() == 29){
+        } else if (a.length() == 29) {
             data_cust = a;
             String kanban = GetSubstrCustFront(a);
             output.setText(kanban);
             pn_cust = kanban;
             hasilScan++;
-        }else {
+        } else {
             data_api = a;
             String kanban = GetSubstrApi(a);
-            if(mDatabaseHelper.CekKanbanAPI(kanban) != null) {
+            if (mDatabaseHelper.CekKanbanAPI(kanban) != null) {
                 pn_api = mDatabaseHelper.CekKanbanAPI(kanban);
                 customer = mDatabaseHelper.CekCustomer(kanban);
                 output.setText(pn_api);
                 hasilScan++;
-            }else{
+            } else {
                 showNotifNotGood(); // alasan : data tidak ditemukan
             }
         }
 
+<<<<<<< HEAD
         if (hasilScan>1) {
             if (pn_cust.contains(pn_api)) {
                 showNotifGood();
@@ -122,12 +141,39 @@ public class MainActivity extends AppCompatActivity {
                 if (pn_api.equals(pn_api)) {
                     showNotifNotGood();
                 }
+=======
+        if(pn_api!=null) {
+            if (!mDatabaseHelper.cekOnResult(data_api)) {
+
+                    mDatabaseHelper.InsertResult(new shopping(npk, customer, pn_api, pn_cust,
+                        "Double", String.valueOf(Calendar.getInstance().getTime()), data_api, data_cust, trial));
+
+                    showNotifNotGood();
+                    pn_api=null;
+                    hasilScan = 0;
+            } else if (hasilScan > 1) {
+                if (pn_cust.contains(pn_api)) {
+                    showNotifGood();
+                    mDatabaseHelper.InsertResult(new shopping(npk, customer, pn_api, pn_cust,
+                            "OK", String.valueOf(Calendar.getInstance().getTime()), data_api, data_cust, trial));
+                    pn_api=null;
+                    hasilScan = 0;
+                    output.setText(R.string.kode_kanban);
+                } else {
+                    mDatabaseHelper.InsertResult(new shopping(npk, customer, pn_api, pn_cust,
+                            "NG", String.valueOf(Calendar.getInstance().getTime()), data_api, data_cust, trial));
+                    pn_api=null;
+                    showNotifNotGood();
+                    hasilScan = 0;
+                }
+            }
+>>>>>>> 41d14a5 (27-01-2022)
         }
     }
 
-    private String displayScanResult(Intent scanIntent)
-    {
-        String decodedData = scanIntent.getStringExtra(getResources().getString(R.string.datawedge_intent_key_data));
+    private String displayScanResult(Intent scanIntent) {
+        String decodedData = scanIntent.getStringExtra(getResources()
+                .getString(R.string.datawedge_intent_key_data));
         return decodedData;
     }
 
@@ -145,19 +191,16 @@ public class MainActivity extends AppCompatActivity {
         cdd.setCanceledOnTouchOutside(false);
     }
 
-    private String GetSubstrCustBack(String kanban){
+    private String GetSubstrCustBack(String kanban) {
         return kanban.substring(4, 17);
     }
 
-    private String GetSubstrCustFront(String kanban){
+    private String GetSubstrCustFront(String kanban) {
         return kanban.substring(4, 14);
     }
 
-    private String GetSubstrApi(String kanban){
+    private String GetSubstrApi(String kanban) {
         return kanban.substring(8, 25);
     }
 
-    private void addToArray(ArrayList arrayList, String input){
-        arrayList.add(input);
-    }
 }
