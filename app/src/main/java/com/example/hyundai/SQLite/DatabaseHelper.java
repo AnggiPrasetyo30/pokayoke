@@ -197,6 +197,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return null;
     }
 
+    public String CekApi(String kanbanApi){
+        String data_api = "data_api";
+        String kanban_api = "kanban_api";
+
+        SQLiteDatabase db2 = this.getReadableDatabase();
+        Cursor cursor2 = db2.query(TABLE_SHOPPING,
+                new String[] {data_api},
+                kanban_api +"=?",
+                new String[]{kanbanApi},null,null,null);
+        if (cursor2 != null && cursor2.moveToFirst()&& cursor2.getCount()>0){
+            Toast.makeText(mContext, cursor2.getString(0), Toast.LENGTH_SHORT).show();
+            return cursor2.getString(0);
+        }
+        cursor2.close();
+        db2.close();
+        return null;
+    }
+
     public String CekCustomer(String hasilScan){
         String pn_api = "pn_api";
         String customer = "customer";
@@ -250,7 +268,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase dbc = this.getReadableDatabase();
         Cursor cursor = dbc.query(TABLE_SHOPPING,// Selecting Table
                 new String[]{cek_data_api},//Selecting columns want to query
-                cek_data_api + "=?",
+                cek_data_api + "=?" ,
                 new String[]{pn},//Where clause
                 null, null, null);
 

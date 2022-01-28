@@ -22,6 +22,8 @@ import com.example.hyundai.SQLite.DatabaseHelper;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import javax.microedition.khronos.opengles.GL;
+
 public class MainActivity extends AppCompatActivity {
 
     DatabaseHelper mDatabaseHelper;
@@ -42,9 +44,12 @@ public class MainActivity extends AppCompatActivity {
     private String GNPK;
     private String GTRIAL;
 
+
     //nama string yang dilempar pada intent
     private final static String NPK = "npk";
     private final static String TRIAL = "trial";
+    private final static String LOCKED = "0";
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -114,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
 
                     alasan_NG = "Data kanban dobel";
                     showNotifNotGood();
+                    intent.putExtra(LOCKED, "1");
                     pn_api=null;
                     hasilScan = 0;
             } else if (hasilScan > 1) {
@@ -122,15 +128,16 @@ public class MainActivity extends AppCompatActivity {
                     mDatabaseHelper.InsertResult(new shopping(npk, customer, pn_api, pn_cust,
                             "OK", String.valueOf(Calendar.getInstance().getTime()), data_api, data_cust, trial));
                     pn_api=null;
+                    intent.putExtra(LOCKED, "0");
                     hasilScan = 0;
                     output.setText(R.string.kode_kanban);
                 } else {
                     mDatabaseHelper.InsertResult(new shopping(npk, customer, pn_api, pn_cust,
                             "NG", String.valueOf(Calendar.getInstance().getTime()), data_api, data_cust, trial));
-
                     alasan_NG = "Kanban tidak cocok";
                     pn_api=null;
                     showNotifNotGood();
+                    intent.putExtra(LOCKED, "1");
                     hasilScan = 0;
                 }
             }

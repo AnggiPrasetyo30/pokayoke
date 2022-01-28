@@ -61,10 +61,10 @@ public class SelectScanner extends AppCompatActivity {
             startActivity(intent);
         });
 
-        card2.setOnClickListener(view -> {
-            Intent intent = new Intent(SelectScanner.this, MainActivity.class);
-            startActivity(intent);
-        });
+//        card2.setOnClickListener(view -> {
+////            Intent intent = new Intent(SelectScanner.this, MainActivity.class);
+////            startActivity(intent);
+//        });
     }
 
     public void onBackPressed() {    }

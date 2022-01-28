@@ -2,6 +2,7 @@ package com.example.hyundai.activity;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.DirectAction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -17,6 +18,7 @@ public class notif_locked extends Dialog implements  View.OnClickListener{
     public Dialog d;
     public Button next;
     TextView alasan;
+    MainActivity mMainActivity ;
 
     public notif_locked(Activity a) {
         super(a);
@@ -26,13 +28,11 @@ public class notif_locked extends Dialog implements  View.OnClickListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.notif_ng);
-
-        alasan = findViewById(R.id.reason);
-        next = findViewById(R.id.btnNext);
-        next.setOnClickListener(this);
+            super.onCreate(savedInstanceState);
+            requestWindowFeature(Window.FEATURE_NO_TITLE);
+            setContentView(R.layout.notif_locked);
+            next = findViewById(R.id.btnNext);
+            next.setOnClickListener(this);
     }
 
     @Override
@@ -43,4 +43,5 @@ public class notif_locked extends Dialog implements  View.OnClickListener{
 
     @Override
     public void onBackPressed() {    }
+
 }

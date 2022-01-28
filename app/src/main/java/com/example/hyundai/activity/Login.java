@@ -23,10 +23,13 @@ public class Login extends AppCompatActivity {
 
     EditText etUsername, etPassword;
     Button btnLogin;
+    private String GLOCKED;
 
     private final static String NPK = "npk";
     private final static String NAMA = "name";
     private final static String TRIAL = "trial";
+    private final static String LOCKED = "0";
+
     DatabaseHelper mDatabaseHelper;
 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,6 +40,9 @@ public class Login extends AppCompatActivity {
         etPassword = findViewById(R.id.passwordLog);
         btnLogin = findViewById(R.id.btnReset);
 
+        Intent intent = getIntent();
+        GLOCKED = intent.getStringExtra(LOCKED);
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -46,20 +52,21 @@ public class Login extends AppCompatActivity {
 
                 User currentUser = mDatabaseHelper.Authenticate(new User(null,npk, null, password, null, null, 0));
 
-                if (currentUser != null) {
+                if (currentUser != null && currentUser.getStatus_akun() == 0) {
                     if (currentUser.getUsergroup().equals("Operator") && currentUser.getStatus_akun()==0){
                         Intent intent=new Intent(Login.this,SelectScanner.class);
                         intent.putExtra(NPK, currentUser.getNpk());
                         intent.putExtra(NAMA, currentUser.getName());
                         intent.putExtra(TRIAL, currentUser.getTrial857());
-                        Log.e("TAG", "onClick: "+currentUser.getTrial857() );
+                        intent.getStringExtra(GLOCKED);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                     }else{
-                        Intent intent=new Intent(Login.this,locked.class);
+                        Intent intent=new Intent(Login.this,Leader.class);
                         intent.putExtra(NPK, currentUser.getNpk());
                         intent.putExtra(NAMA, currentUser.getName());
                         intent.putExtra(TRIAL, currentUser.getTrial857());
+                        intent.getStringExtra(GLOCKED);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                     }
