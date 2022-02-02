@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     //untuk menampung value dari intent
     private String GNPK;
     private String GTRIAL;
+    private String GLOCK;
 
 
     //nama string yang dilempar pada intent
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent2 = getIntent();
         GNPK = intent2.getStringExtra(NPK);
         GTRIAL = intent2.getStringExtra(TRIAL);
+
 
         hasilScan = 0;
 
@@ -83,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         String a = displayScanResult(intent);
         String npk = GNPK;
         String trial = GTRIAL;
-
+        GLOCK = intent.getStringExtra(LOCKED);
 
         if (a.length() == 32) {
             data_cust = a;
@@ -116,10 +118,11 @@ public class MainActivity extends AppCompatActivity {
 
                     mDatabaseHelper.InsertResult(new shopping(npk, customer, pn_api, pn_cust,
                         "Double", String.valueOf(Calendar.getInstance().getTime()), data_api, data_cust, trial));
-
+                    intent.putExtra(GLOCK, "1");
                     alasan_NG = "Data kanban dobel";
                     showNotifNotGood();
-                    intent.putExtra(LOCKED, "1");
+
+                    Log.e("LOCKED", "onCreate: " + GLOCK );
                     pn_api=null;
                     hasilScan = 0;
             } else if (hasilScan > 1) {
@@ -128,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
                     mDatabaseHelper.InsertResult(new shopping(npk, customer, pn_api, pn_cust,
                             "OK", String.valueOf(Calendar.getInstance().getTime()), data_api, data_cust, trial));
                     pn_api=null;
-                    intent.putExtra(LOCKED, "0");
+//                    intent.putExtra(LOCKED, 0);
                     hasilScan = 0;
                     output.setText(R.string.kode_kanban);
                 } else {
@@ -136,8 +139,9 @@ public class MainActivity extends AppCompatActivity {
                             "NG", String.valueOf(Calendar.getInstance().getTime()), data_api, data_cust, trial));
                     alasan_NG = "Kanban tidak cocok";
                     pn_api=null;
+                    intent.putExtra(GLOCK, "1");
                     showNotifNotGood();
-                    intent.putExtra(LOCKED, "1");
+                    Log.e("LOCKED", "onCreate: " + GLOCK );
                     hasilScan = 0;
                 }
             }

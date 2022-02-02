@@ -23,12 +23,11 @@ public class Login extends AppCompatActivity {
 
     EditText etUsername, etPassword;
     Button btnLogin;
-    private String GLOCKED;
 
     private final static String NPK = "npk";
     private final static String NAMA = "name";
     private final static String TRIAL = "trial";
-    private final static String LOCKED = "0";
+    private static String LOCKED = "0";
 
     DatabaseHelper mDatabaseHelper;
 
@@ -39,10 +38,15 @@ public class Login extends AppCompatActivity {
         etUsername = findViewById(R.id.userLog);
         etPassword = findViewById(R.id.passwordLog);
         btnLogin = findViewById(R.id.btnReset);
+        String GLOCKED = null;
 
         Intent intent = getIntent();
-        GLOCKED = intent.getStringExtra(LOCKED);
+        if(LOCKED != null) {
+            GLOCKED = intent.getStringExtra(LOCKED);
+            Log.e("GLOCKED", "onCreate: " + GLOCKED );
+        }
 
+        String finalGLOCKED = GLOCKED;
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,7 +62,7 @@ public class Login extends AppCompatActivity {
                         intent.putExtra(NPK, currentUser.getNpk());
                         intent.putExtra(NAMA, currentUser.getName());
                         intent.putExtra(TRIAL, currentUser.getTrial857());
-                        intent.getStringExtra(GLOCKED);
+                        intent.getStringExtra(finalGLOCKED);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                     }else{
@@ -66,7 +70,7 @@ public class Login extends AppCompatActivity {
                         intent.putExtra(NPK, currentUser.getNpk());
                         intent.putExtra(NAMA, currentUser.getName());
                         intent.putExtra(TRIAL, currentUser.getTrial857());
-                        intent.getStringExtra(GLOCKED);
+                        intent.getStringExtra(finalGLOCKED);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                     }

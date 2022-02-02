@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -17,6 +18,7 @@ public class notif_ng extends Dialog implements  View.OnClickListener{
     public Dialog d;
     public Button next;
     TextView alasan;
+    private static String LOCKED = "1";
 
     public notif_ng(Activity a) {
         super(a);
@@ -30,6 +32,7 @@ public class notif_ng extends Dialog implements  View.OnClickListener{
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.notif_ng);
 
+
         alasan = findViewById(R.id.reason);
         alasan.setText(MainActivity.alasan_NG);
         next = findViewById(R.id.btnNext);
@@ -41,9 +44,11 @@ public class notif_ng extends Dialog implements  View.OnClickListener{
         // ganti dengan fungsi logout + intent ke halaman login
 
         Intent intent = new Intent(getContext(), Login.class );
-        c.finish();
-        c.isDestroyed();
-        c.isFinishing();
+        intent.putExtra(LOCKED, "1");
+        Log.e("LOCKED", "onCreate: " + LOCKED );
+//        c.finish();
+//        c.isDestroyed();
+//        c.isFinishing();
         c.startActivity(intent);
     }
 
