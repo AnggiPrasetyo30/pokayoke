@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
+
 
     DatabaseHelper mDatabaseHelper;
     TextView output;
@@ -46,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
     private final static String NPK = "npk";
     private final static String TRIAL = "trial";
 
+    //menyimpan sound
+    public static MediaPlayer mp;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         output = findViewById(R.id.kodekanban);
         Button btnReset = findViewById(R.id.btnReset);
 
+        mp = MediaPlayer.create(this, R.raw.sound_ng);
 
         btnReset.setOnClickListener(view -> {
             output.setText(R.string.kode_kanban);
@@ -102,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
                 hasilScan++;
             } else {
                 alasan_NG = "Kanban tidak ditemukan";
+                mp.start();
                 showNotifNotGood(); // alasan : data tidak ditemukan
             }
         }
@@ -113,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
                         "Double", String.valueOf(Calendar.getInstance().getTime()), data_api, data_cust, trial));
 
                     alasan_NG = "Data kanban dobel";
+                    mp.start();
                     showNotifNotGood();
                     pn_api=null;
                     hasilScan = 0;
@@ -130,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
 
                     alasan_NG = "Kanban tidak cocok";
                     pn_api=null;
+                    mp.start();
                     showNotifNotGood();
                     hasilScan = 0;
                 }
@@ -168,5 +177,8 @@ public class MainActivity extends AppCompatActivity {
     private String GetSubstrApi(String kanban) {
         return kanban.substring(8, 25);
     }
+
+
+
 
 }

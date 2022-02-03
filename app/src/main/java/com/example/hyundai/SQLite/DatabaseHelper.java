@@ -38,15 +38,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TABLE_PRODUCT = "product";
     public static final String TABLE_SHOPPING = "shopping";
 
-
-
     public DatabaseHelper(Context context) {
         super(context, DB_name, null, 2);
         this.mContext = context;
         this.DB_PATH = "/data/data/" + mContext.getPackageName() + "/databases/";
 
     }
-
 
     public void createDatabase() throws IOException {
         boolean mDatabaseExist = checkDataBase();
@@ -189,7 +186,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 pn_api +"=?",
                 new String[]{hasilScan},null,null,null);
         if (cursor2 != null && cursor2.moveToFirst()&& cursor2.getCount()>0){
-           // Toast.makeText(mContext, cursor2.getString(0), Toast.LENGTH_SHORT).show();
             return cursor2.getString(0);
         }
         cursor2.close();
@@ -280,5 +276,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         dbc.close();
         return true;
 
+    }
+
+    public void retrieve_produk(){
+        String part_name = "part_name";
+        String sku = "sku";
+
+        SQLiteDatabase dbr = this.getReadableDatabase();
+        Cursor cursor = dbr.query(TABLE_PRODUCT,
+                new String[]{part_name,sku},
+                null,
+                null,
+                null,null,null);
+
+        if (cursor !=null && cursor.getCount()>0){
+            Product produk = new
+        }
     }
 }

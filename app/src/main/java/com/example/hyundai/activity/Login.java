@@ -56,7 +56,7 @@ public class Login extends AppCompatActivity {
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                     }else{
-                        Intent intent=new Intent(Login.this,locked.class);
+                        Intent intent=new Intent(Login.this,Leader.class);
                         intent.putExtra(NPK, currentUser.getNpk());
                         intent.putExtra(NAMA, currentUser.getName());
                         intent.putExtra(TRIAL, currentUser.getTrial857());

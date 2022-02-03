@@ -12,7 +12,10 @@
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".activity.Leader"></activity>
+        <activity android:name=".activity.list_riwayat"></activity>
+        <activity android:name=".activity.list_user" />
+        <activity android:name=".activity.list_product" />
+        <activity android:name=".activity.Leader" />
         <activity android:name=".activity.Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,7 +24,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.locked" />
-        <activity android:name=".activity.SelectScannerLeader" />
         <activity android:name=".activity.SelectScanner" />
         <activity
             android:name=".activity.MainActivity"
