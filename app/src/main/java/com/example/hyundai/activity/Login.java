@@ -27,7 +27,10 @@ public class Login extends AppCompatActivity {
     private final static String NPK = "npk";
     private final static String NAMA = "name";
     private final static String TRIAL = "trial";
-    private static String LOCKED = "0";
+
+    SharedPreferences mSharedPreferences;
+    private final static String APP_NAME= "Hyundai";
+    private final static String LOCKED = "0";
 
     DatabaseHelper mDatabaseHelper;
 
@@ -38,15 +41,11 @@ public class Login extends AppCompatActivity {
         etUsername = findViewById(R.id.userLog);
         etPassword = findViewById(R.id.passwordLog);
         btnLogin = findViewById(R.id.btnReset);
-        String GLOCKED = null;
 
-        Intent intent = getIntent();
-        if(LOCKED != null) {
-            GLOCKED = intent.getStringExtra(LOCKED);
-            Log.e("GLOCKED", "onCreate: " + GLOCKED );
-        }
+        mSharedPreferences = getSharedPreferences(APP_NAME, MODE_PRIVATE);
+        String GLOCKED = mSharedPreferences.getString(LOCKED, null);
+        Log.e("GLOCKED", "onCreate: " + GLOCKED );
 
-        String finalGLOCKED = GLOCKED;
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,20 +56,24 @@ public class Login extends AppCompatActivity {
                 User currentUser = mDatabaseHelper.Authenticate(new User(null,npk, null, password, null, null, 0));
 
                 if (currentUser != null && currentUser.getStatus_akun() == 0) {
-                    if (currentUser.getUsergroup().equals("Operator") && currentUser.getStatus_akun()==0){
+                    if (currentUser.getUsergroup().equals("Operator") && GLOCKED.equals("0")){
                         Intent intent=new Intent(Login.this,SelectScanner.class);
                         intent.putExtra(NPK, currentUser.getNpk());
                         intent.putExtra(NAMA, currentUser.getName());
                         intent.putExtra(TRIAL, currentUser.getTrial857());
-                        intent.getStringExtra(finalGLOCKED);
+//                        intent.getStringExtra(finalGLOCKED);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
-                    }else{
+                    }else if (currentUser.getUsergroup().equals("Operator") && GLOCKED.equals("1")){
+                        Intent intent=new Intent(Login.this,locked.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                    } else {
                         Intent intent=new Intent(Login.this,Leader.class);
                         intent.putExtra(NPK, currentUser.getNpk());
                         intent.putExtra(NAMA, currentUser.getName());
                         intent.putExtra(TRIAL, currentUser.getTrial857());
-                        intent.getStringExtra(finalGLOCKED);
+//                        intent.getStringExtra(finalGLOCKED);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                     }
