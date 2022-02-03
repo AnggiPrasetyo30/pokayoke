@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +23,8 @@ import com.example.hyundai.SQLite.DatabaseHelper;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+
+import javax.microedition.khronos.opengles.GL;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -43,10 +46,14 @@ public class MainActivity extends AppCompatActivity {
     //untuk menampung value dari intent
     private String GNPK;
     private String GTRIAL;
+    private String GLOCK;
+
 
     //nama string yang dilempar pada intent
     private final static String NPK = "npk";
     private final static String TRIAL = "trial";
+    private final static String LOCKED = "0";
+
 
     //menyimpan sound
     public static MediaPlayer mp;
@@ -61,6 +68,15 @@ public class MainActivity extends AppCompatActivity {
         Intent intent2 = getIntent();
         GNPK = intent2.getStringExtra(NPK);
         GTRIAL = intent2.getStringExtra(TRIAL);
+
+        ImageButton back = findViewById(R.id.btnback);
+
+        back.setOnClickListener(view ->{
+            Intent intent = new Intent(MainActivity.this, SelectScanner.class);
+            startActivity(intent);
+            finish();
+        });
+
 
         hasilScan = 0;
 
@@ -84,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
         String a = displayScanResult(intent);
         String npk = GNPK;
         String trial = GTRIAL;
-
+        GLOCK = intent.getStringExtra(LOCKED);
 
         if (a.length() == 32) {
             data_cust = a;
@@ -118,10 +134,12 @@ public class MainActivity extends AppCompatActivity {
 
                     mDatabaseHelper.InsertResult(new shopping(npk, customer, pn_api, pn_cust,
                         "Double", String.valueOf(Calendar.getInstance().getTime()), data_api, data_cust, trial));
-
+                    intent.putExtra(GLOCK, "1");
                     alasan_NG = "Data kanban dobel";
                     mp.start();
                     showNotifNotGood();
+
+                    Log.e("LOCKED", "onCreate: " + GLOCK );
                     pn_api=null;
                     hasilScan = 0;
             } else if (hasilScan > 1) {
@@ -130,16 +148,21 @@ public class MainActivity extends AppCompatActivity {
                     mDatabaseHelper.InsertResult(new shopping(npk, customer, pn_api, pn_cust,
                             "OK", String.valueOf(Calendar.getInstance().getTime()), data_api, data_cust, trial));
                     pn_api=null;
+//                    intent.putExtra(LOCKED, 0);
                     hasilScan = 0;
                     output.setText(R.string.kode_kanban);
                 } else {
                     mDatabaseHelper.InsertResult(new shopping(npk, customer, pn_api, pn_cust,
                             "NG", String.valueOf(Calendar.getInstance().getTime()), data_api, data_cust, trial));
-
                     alasan_NG = "Kanban tidak cocok";
                     pn_api=null;
+
                     mp.start();
+
+                    intent.putExtra(GLOCK, "1");
+
                     showNotifNotGood();
+                    Log.e("LOCKED", "onCreate: " + GLOCK );
                     hasilScan = 0;
                 }
             }

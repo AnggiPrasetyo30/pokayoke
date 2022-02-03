@@ -72,10 +72,8 @@
 
     <RelativeLayout
         android:id="@+id/linearLayout3"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/relativeLayout"
@@ -134,7 +132,7 @@
                 android:layout_height="80dp"
                 android:layout_gravity="center"
                 android:layout_margin="5dp"
-                app:cardBackgroundColor="#000000"
+                app:cardBackgroundColor="#d9d9d9"
                 app:cardCornerRadius="10dp">
 
                 <LinearLayout
@@ -180,7 +178,7 @@
                 android:layout_width="145dp"
                 android:layout_height="80dp"
                 android:layout_gravity="center"
-                app:cardBackgroundColor="#000000"
+                app:cardBackgroundColor="#d9d9d9"
                 app:cardCornerRadius="10dp">
 
                 <LinearLayout

@@ -1,32 +1,82 @@
 package com.example.hyundai.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import android.util.Log;
+import android.widget.TextView;
 
 import com.example.hyundai.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import javax.microedition.khronos.opengles.GL;
+
 public class Leader extends AppCompatActivity {
+
+    private TextView nama_user;
+
+    private final static String NPK = "npk";
+    private final static String NAMA = "name";
+    private final static String TRIAL = "trial";
+
+    SharedPreferences mSharedPreferences;
+    private final static String APP_NAME= "Hyundai";
+    private final static String LOCKED = "0";
 
     FloatingActionButton fab, fab1,fab2, fab3;
     Animation openAnim, closeAnim, toBottom, fromBottom;
     TextView txtuser, txtproduct, txtriwayat;
-
-    boolean isOpen = false;
+    boolean isOpen=true;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leader);
+        Intent Gintent = getIntent();
+        nama_user = findViewById(R.id.nama_user);
+        String  Gnama = Gintent.getStringExtra(NAMA);
+        String GNPK = Gintent.getStringExtra(NPK);
+        String GTRIAL = Gintent.getStringExtra(TRIAL);
+
+        mSharedPreferences = getSharedPreferences(APP_NAME, MODE_PRIVATE);
+        String GLOCKED = mSharedPreferences.getString(LOCKED, "0");
+        Log.e("GLOCKED", "onCreate: " + GLOCKED );
+
+        nama_user.setText(Gnama);
+
+        if(GLOCKED.equals("1")) {
+            showNotifLocked();
+        }
+
+        ImageButton logout = findViewById(R.id.btnlogout);
+        logout.setOnClickListener(view ->{
+            Intent intent = new Intent(Leader.this, Login.class);
+            startActivity(intent);
+            finish();
+        });
+
+        CardView card1 = findViewById(R.id.card1);
+        card1.setOnClickListener(view -> {
+            Intent intent = new Intent(Leader.this, MainActivity.class);
+            intent.putExtra(NPK, GNPK);
+            intent.putExtra(TRIAL, GTRIAL);
+            startActivity(intent);
+        });
+
+
 
         fab = (FloatingActionButton) findViewById(R.id.floatingActionButton);
         fab1 = (FloatingActionButton) findViewById(R.id.floatingActionButton1);
@@ -76,13 +126,8 @@ public class Leader extends AppCompatActivity {
             }
         });
 
-
-
-
-        //harus ditambahi method cek status_akun operator
-        //sebelumnya baru tampilkan notiflocked atau tidak
-        showNotifLocked();
     }
+
 
     private void showNotifLocked() {
         notif_locked cdd = new notif_locked(Leader.this);

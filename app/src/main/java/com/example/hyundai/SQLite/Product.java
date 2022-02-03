@@ -1,6 +1,5 @@
 package com.example.hyundai.SQLite;
 
-import java.math.BigInteger;
 
 public class Product {
     public String station_num;
@@ -9,33 +8,30 @@ public class Product {
     public String position;
     public String pn_api;
     public String pn_cust;
-    public BigInteger ptloc;
-    public BigInteger sfgwh;
-    public BigInteger fgwh;
-    public BigInteger nkiwh;
+    public String ptloc;
+    public String sfgwh;
+    public String fgwh;
+    public String nkiwh;
     public String type;
     public String customer;
     public String cust_id;
     public String supplier_id;
     public String job_num;
     public String address;
-    public Integer time_production;
-    public Integer qty_packaging;
-    public Integer qty_child;
+    public String time_production;
+    public String qty_packaging;
+    public String qty_child;
     public String goods;
     public String line_prod;
-    public BigInteger seq_qr;
-    public BigInteger seq_data_part;
-
-    public Product() {
-    }
+    public String seq_qr;
+    public String seq_data_part;
 
     public Product(String station_num, String sku, String part_name, String position,
-                   String pn_api, String pn_cust, BigInteger ptloc, BigInteger sfgwh,
-                   BigInteger fgwh, BigInteger nkiwh, String type, String customer, String cust_id,
-                   String supplier_id, String job_num, String address, Integer time_production,
-                   Integer qty_packaging, Integer qty_child, String goods, String line_prod, BigInteger seq_qr,
-                   BigInteger seq_data_part) {
+                   String pn_api, String pn_cust, String ptloc, String sfgwh,
+                   String fgwh, String nkiwh, String type, String customer, String cust_id,
+                   String supplier_id, String job_num, String address, String time_production,
+                   String qty_packaging, String qty_child, String goods, String line_prod, String seq_qr,
+                   String seq_data_part) {
         this.station_num = station_num;
         this.sku = sku;
         this.part_name = part_name;
@@ -109,35 +105,35 @@ public class Product {
         this.pn_cust = pn_cust;
     }
 
-    public BigInteger getPtloc() {
+    public String getPtloc() {
         return ptloc;
     }
 
-    public void setPtloc(BigInteger ptloc) {
+    public void setPtloc(String ptloc) {
         this.ptloc = ptloc;
     }
 
-    public BigInteger getSfgwh() {
+    public String getSfgwh() {
         return sfgwh;
     }
 
-    public void setSfgwh(BigInteger sfgwh) {
+    public void setSfgwh(String sfgwh) {
         this.sfgwh = sfgwh;
     }
 
-    public BigInteger getFgwh() {
+    public String getFgwh() {
         return fgwh;
     }
 
-    public void setFgwh(BigInteger fgwh) {
+    public void setFgwh(String fgwh) {
         this.fgwh = fgwh;
     }
 
-    public BigInteger getNkiwh() {
+    public String getNkiwh() {
         return nkiwh;
     }
 
-    public void setNkiwh(BigInteger nkiwh) {
+    public void setNkiwh(String nkiwh) {
         this.nkiwh = nkiwh;
     }
 
@@ -189,27 +185,27 @@ public class Product {
         this.address = address;
     }
 
-    public Integer getTime_production() {
+    public String getTime_production() {
         return time_production;
     }
 
-    public void setTime_production(Integer time_production) {
+    public void setTime_production(String time_production) {
         this.time_production = time_production;
     }
 
-    public Integer getQty_packaging() {
+    public String getQty_packaging() {
         return qty_packaging;
     }
 
-    public void setQty_packaging(Integer qty_packaging) {
+    public void setQty_packaging(String qty_packaging) {
         this.qty_packaging = qty_packaging;
     }
 
-    public Integer getQty_child() {
+    public String getQty_child() {
         return qty_child;
     }
 
-    public void setQty_child(Integer qty_child) {
+    public void setQty_child(String qty_child) {
         this.qty_child = qty_child;
     }
 
@@ -229,19 +225,19 @@ public class Product {
         this.line_prod = line_prod;
     }
 
-    public BigInteger getSeq_qr() {
+    public String getSeq_qr() {
         return seq_qr;
     }
 
-    public void setSeq_qr(BigInteger seq_qr) {
+    public void setSeq_qr(String seq_qr) {
         this.seq_qr = seq_qr;
     }
 
-    public BigInteger getSeq_data_part() {
+    public String getSeq_data_part() {
         return seq_data_part;
     }
 
-    public void setSeq_data_part(BigInteger seq_data_part) {
+    public void setSeq_data_part(String seq_data_part) {
         this.seq_data_part = seq_data_part;
     }
 }

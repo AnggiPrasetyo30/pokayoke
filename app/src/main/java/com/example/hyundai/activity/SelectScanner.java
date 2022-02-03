@@ -49,7 +49,6 @@ public class SelectScanner extends AppCompatActivity {
 
         logout.setOnClickListener(view ->{
             Intent intent = new Intent(SelectScanner.this, Login.class);
-            finish();
             startActivity(intent);
             finish();
         });
@@ -58,11 +57,6 @@ public class SelectScanner extends AppCompatActivity {
             Intent intent = new Intent(SelectScanner.this, MainActivity.class);
             intent.putExtra(NPK, GNPK);
             intent.putExtra(TRIAL, GTRIAL);
-            startActivity(intent);
-        });
-
-        card2.setOnClickListener(view -> {
-            Intent intent = new Intent(SelectScanner.this, MainActivity.class);
             startActivity(intent);
         });
     }

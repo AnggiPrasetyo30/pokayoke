@@ -39,7 +39,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TABLE_SHOPPING = "shopping";
 
     public DatabaseHelper(Context context) {
-        super(context, DB_name, null, 2);
+        super(context, DB_name, null, 3);
         this.mContext = context;
         this.DB_PATH = "/data/data/" + mContext.getPackageName() + "/databases/";
 
@@ -193,6 +193,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return null;
     }
 
+
     public String CekCustomer(String hasilScan){
         String pn_api = "pn_api";
         String customer = "customer";
@@ -246,7 +247,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase dbc = this.getReadableDatabase();
         Cursor cursor = dbc.query(TABLE_SHOPPING,// Selecting Table
                 new String[]{cek_data_api},//Selecting columns want to query
-                cek_data_api + "=?",
+                cek_data_api + "=?" ,
                 new String[]{pn},//Where clause
                 null, null, null);
 
@@ -290,7 +291,47 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 null,null,null);
 
         if (cursor !=null && cursor.getCount()>0){
-            Product produk = new
+            Product produk = new Product(null,cursor.getString(1),cursor.getString(0),null,null,null,null,null,
+                    null,null,null,null,null,null,null,null,null,null,
+                    null,null,null,null,null);
         }
+        cursor.close();
+        dbr.close();
     }
-}
+
+    public void retrieve_user(){
+        String nama = "name";
+        String npk = "npk";
+
+        SQLiteDatabase dbr = this.getReadableDatabase();
+        Cursor cursor = dbr.query(TABLE_USER,
+                new String[]{nama,npk},
+                null,
+                null,
+                null,null,null);
+
+        if (cursor !=null && cursor.getCount()>0){
+            User user = new User(cursor.getString(0),cursor.getString(1),null,null,null,null,null);
+        }
+        cursor.close();
+        dbr.close();
+    }
+
+    public void retrieve_riwayat() {
+        String kanban_api = "kanban_api";
+        String kanban_cust = "kanban_cust";
+        String hasil_scan = "hasil";
+
+        SQLiteDatabase dbr = this.getReadableDatabase();
+        Cursor cursor = dbr.query(TABLE_USER,
+                new String[]{kanban_api, kanban_cust, hasil_scan},
+                null,
+                null,
+                null, null, null);
+
+        if (cursor != null && cursor.getCount() > 0) {
+            shopping riwayat = new shopping(null, null, cursor.getString(0), cursor.getString(1), cursor.getString(2), null, null, null,null);
+        }
+        cursor.close();
+        dbr.close();
+    }}

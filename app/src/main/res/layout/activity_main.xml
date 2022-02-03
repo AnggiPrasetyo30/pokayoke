@@ -21,24 +21,12 @@
 
 
         <ImageButton
-            android:id="@+id/btnlogout"
+            android:id="@+id/btnback"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_centerVertical="true"
             android:layout_marginStart="10dp"
-            android:background="@drawable/logout" />
-
-        <TextView
-            android:id="@+id/nama_user"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="10dp"
-            android:layout_toEndOf="@+id/btnlogout"
-            android:background="#FFFFFF"
-            android:text="@string/nama"
-            android:textColor="#000000"
-            android:textStyle="bold" />
+            android:background="@drawable/kembali" />
 
         <ImageView
             android:id="@+id/cv_img"
