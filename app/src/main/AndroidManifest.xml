@@ -12,13 +12,16 @@
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".activity.list_riwayat"></activity>
+        <activity android:name=".activity.create_product"></activity>
+        <activity android:name=".activity.create_user" />
+        <activity android:name=".activity.list_riwayat" />
         <activity android:name=".activity.list_user" />
         <activity android:name=".activity.list_product" />
         <activity android:name=".activity.Leader" />
         <activity android:name=".activity.Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -29,6 +32,7 @@
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="com.darryncampbell.datawedge.java.ACTION" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
