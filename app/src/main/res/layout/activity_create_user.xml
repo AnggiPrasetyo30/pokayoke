@@ -122,6 +122,7 @@
                 android:id="@+id/fieldUsergroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:entries="@array/daftar_group"
                 android:backgroundTint="@color/white" />
 
             <TextView
@@ -134,6 +135,7 @@
                 android:id="@+id/fieldDepartement"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:entries="@array/daftar_departement"
                 android:backgroundTint="@color/white" />
 
             <TextView

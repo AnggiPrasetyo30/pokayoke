@@ -24,6 +24,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import static android.accounts.AccountManager.KEY_PASSWORD;
@@ -211,6 +212,44 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor2.close();
         db2.close();
         return null;
+    }
+
+    public User insertValue (User user) {
+        String npk = "npk";
+        String username = "username";
+        String password = "password";
+        String rfid_tag = "rfid_tag" ;
+        String name = "name";
+        String usergroup = "usergroup";
+        String department = "department";
+        String op_skill = "op_skill";
+        String last_login = "last_login";
+        String status = "status";
+        String created_at = "created_at" ;
+        String updated_at = "updated_at";
+        String status_akun = "status_akun";
+        String trial857 = "trial857";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(npk, user.getNpk());
+        values.put(username, user.getUsername());
+        values.put(password, user.getPassword());
+        values.put(rfid_tag, user.getRfid_tag());
+        values.put(name, user.getName());
+        values.put(usergroup, user.getUsergroup());
+        values.put(department, user.getDepartment());
+        values.put(op_skill, user.getOp_skill());
+        values.put(last_login, user.getLast_login().toString());
+        values.put(status, user.getStatus());
+        values.put(created_at, user.getCreated_at().toString());
+        values.put(updated_at, user.getUpdated_at().toString());
+        values.put(status_akun, user.getStatus_akun().toString());
+        values.put(trial857, user.getTrial857());
+
+        long newRowId = db.insert(TABLE_USER, null, values);
+
+        return user;
     }
 
     public shopping InsertResult(shopping shop) {

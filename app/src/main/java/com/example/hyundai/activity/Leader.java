@@ -165,5 +165,9 @@ public class Leader extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {    }
+    public void onBackPressed() {
+        Intent intent = new Intent(Leader.this, Login.class);
+        startActivity(intent);
+        finish();
+    }
 }

@@ -28,4 +28,21 @@
     <string name="reset">RESET</string>
     <string name="denso">Scan Barcode</string>
     <string name="tmmin">Scan QR</string>
+    <string-array name="daftar_group">
+        <item>Operator</item>
+        <item>Leader</item>
+        <item>Foreman</item>
+        <item>Supervisor</item>
+        <item>Manager</item>
+        <item>Admin</item>
+    </string-array>
+    <string-array name="daftar_departement">
+        <item>PPIC</item>
+        <item>Production</item>
+        <item>Quality</item>
+        <item>Engineering</item>
+        <item>HR,GA,EHS</item>
+        <item>Finance Accounting</item>
+        <item>Purchasing Marketing</item>
+    </string-array>
 </resources>
