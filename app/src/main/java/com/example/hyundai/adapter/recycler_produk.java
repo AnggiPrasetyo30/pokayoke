@@ -41,6 +41,7 @@ public class recycler_produk extends RecyclerView.Adapter<recycler_produk.MyView
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.item_produk, parent, false);
+        mDatabaseHelper = new DatabaseHelper(context);
         return new MyViewHolder(view).linkAdapter(this);
     }
 

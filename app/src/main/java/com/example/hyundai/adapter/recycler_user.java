@@ -91,6 +91,7 @@ public class recycler_user extends RecyclerView.Adapter<recycler_user.MyViewHold
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, update_user.class);
+                    intent.putExtra("NPK", adapter.itemUser.get(getAdapterPosition()).getNpk());
                     context.startActivity(intent);
                 }
             });
