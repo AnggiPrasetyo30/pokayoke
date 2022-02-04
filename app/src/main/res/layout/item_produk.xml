@@ -8,7 +8,7 @@
     android:layout_marginTop="5dp"
     android:layout_marginRight="10dp"
     android:layout_marginBottom="5dp"
-    android:backgroundTint="#92badd"
+    android:backgroundTint="#00ff00"
     android:orientation="vertical"
     app:cardCornerRadius="10dp"
     app:cardElevation="8dp">
@@ -47,7 +47,7 @@
         </LinearLayout>
 
         <ImageButton
-            android:id="@+id/imageButton2"
+            android:id="@+id/edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0"
@@ -55,7 +55,7 @@
             app:srcCompat="@android:drawable/ic_menu_edit" />
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/hapus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0"

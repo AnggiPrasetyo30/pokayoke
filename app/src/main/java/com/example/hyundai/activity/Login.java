@@ -55,7 +55,7 @@ public class Login extends AppCompatActivity {
 
                 User currentUser = mDatabaseHelper.Authenticate(new User(null,npk, null, password, null, null, 0));
 
-                if (currentUser != null && currentUser.getStatus_akun() == 0) {
+                if (currentUser != null) {
                     if (currentUser.getUsergroup().equals("Operator") && GLOCKED.equals("0")){
                         Intent intent=new Intent(Login.this,SelectScanner.class);
                         intent.putExtra(NPK, currentUser.getNpk());

@@ -69,15 +69,6 @@ public class MainActivity extends AppCompatActivity {
         GNPK = intent2.getStringExtra(NPK);
         GTRIAL = intent2.getStringExtra(TRIAL);
 
-        ImageButton back = findViewById(R.id.btnback);
-
-        back.setOnClickListener(view ->{
-            Intent intent = new Intent(MainActivity.this, SelectScanner.class);
-            startActivity(intent);
-            finish();
-        });
-
-
         hasilScan = 0;
 
         output = findViewById(R.id.kodekanban);

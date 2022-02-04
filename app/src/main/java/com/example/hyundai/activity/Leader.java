@@ -104,7 +104,8 @@ public class Leader extends AppCompatActivity {
             @Override
             public void onClick(View view){
                 animationFab();
-                Toast.makeText(Leader.this, "berhasil", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(Leader.this,list_user.class);
+                startActivity(intent);
             }
         });
 
@@ -112,7 +113,8 @@ public class Leader extends AppCompatActivity {
             @Override
             public void onClick(View view){
                 animationFab();
-                Toast.makeText(Leader.this, "berhasil", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(Leader.this,list_product.class);
+                startActivity(intent);
 
             }
         });
@@ -121,7 +123,8 @@ public class Leader extends AppCompatActivity {
             @Override
             public void onClick(View view){
                 animationFab();
-                Toast.makeText(Leader.this, "berhasil", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(Leader.this,list_riwayat.class);
+                startActivity(intent);
 
             }
         });
@@ -160,4 +163,7 @@ public class Leader extends AppCompatActivity {
             isOpen=true;
         }
     }
+
+    @Override
+    public void onBackPressed() {    }
 }

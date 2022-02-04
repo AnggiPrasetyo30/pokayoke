@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,6 +24,7 @@ public class notif_ng extends Dialog implements  View.OnClickListener{
     public Dialog d;
     public Button next;
     TextView alasan;
+    MediaPlayer mp;
 
     //SharedPreferences
     SharedPreferences mSharedPreferences;
@@ -39,6 +41,8 @@ public class notif_ng extends Dialog implements  View.OnClickListener{
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.notif_ng);
+
+        mp = MainActivity.mp;
 
         //SharedPreferences
         mSharedPreferences = getContext().getSharedPreferences(APP_NAME, MODE_PRIVATE);
@@ -57,6 +61,8 @@ public class notif_ng extends Dialog implements  View.OnClickListener{
         SharedPreferences.Editor edit = mSharedPreferences.edit();
         edit.putString(LOCKED, "1");
         edit.apply();
+        mp.stop();
+
 
         Intent intent = new Intent(getContext(), Login.class );
 //        intent.putExtra(LOCKED, "1");

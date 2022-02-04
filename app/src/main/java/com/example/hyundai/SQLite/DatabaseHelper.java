@@ -23,6 +23,7 @@ import java.math.BigInteger;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.List;
 
 import static android.accounts.AccountManager.KEY_PASSWORD;
@@ -47,48 +48,48 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public void createDatabase() throws IOException {
         boolean mDatabaseExist = checkDataBase();
-        if (!mDatabaseExist){
+        if (!mDatabaseExist) {
             this.getReadableDatabase();
             this.close();
-            try{
+            try {
                 copyDataBase();
 
-            }catch (IOException mIOException){
+            } catch (IOException mIOException) {
                 mIOException.printStackTrace();
                 throw new Error("Error copying database");
-            }finally {
+            } finally {
                 this.close();
             }
         }
     }
 
     private void copyDataBase() throws IOException {
-        try{
+        try {
             InputStream inputStream = mContext.getAssets().open(DB_name);
-            String OutfileName = DB_PATH+DB_name;
+            String OutfileName = DB_PATH + DB_name;
             OutputStream outputStream = new FileOutputStream(OutfileName);
 
-            byte [] buffer = new byte[1024];
+            byte[] buffer = new byte[1024];
             int lenght;
-            while ((lenght = inputStream.read(buffer)) > 0){
+            while ((lenght = inputStream.read(buffer)) > 0) {
                 outputStream.write(buffer, 0, lenght);
             }
             outputStream.flush();
             outputStream.close();
             inputStream.close();
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     //Check database already exist or not
     private boolean checkDataBase() {
-        try{
+        try {
             final String mPath = DB_PATH + DB_name;
             final File file = new File(mPath);
             return file.exists();
-        }catch (SQLiteException e){
+        } catch (SQLiteException e) {
             e.printStackTrace();
             return false;
         }
@@ -96,7 +97,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     public synchronized void close() {
-        if(myDatabase != null){
+        if (myDatabase != null) {
             myDatabase.close();
             SQLiteDatabase.releaseMemory();
             super.close();
@@ -104,11 +105,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onCreate(SQLiteDatabase db) {}
+    public void onCreate(SQLiteDatabase db) {
+    }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if(newVersion>oldVersion) {
+        if (newVersion > oldVersion) {
             try {
                 copyDataBase();
             } catch (IOException e) {
@@ -152,9 +154,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String trial857 = "TRIAL857";
         String status_akun = "status_akun";
 
-        try{
+        try {
             createDatabase();
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
         SQLiteDatabase db = this.getReadableDatabase();
@@ -164,7 +166,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 new String[]{user.npk},//Where clause
                 null, null, null);
 
-        if (cursor != null && cursor.moveToFirst()&& cursor.getCount()>0) {
+        if (cursor != null && cursor.moveToFirst() && cursor.getCount() > 0) {
             User user1 = new User(cursor.getString(0), cursor.getString(1), cursor.getString(2),
                     cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getInt(6));
             if (user.password.equalsIgnoreCase(user1.password)) {
@@ -176,16 +178,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return null;
     }
 
-    public String CekKanbanAPI(String hasilScan){
+    public String CekKanbanAPI(String hasilScan) {
         String pn_api = "pn_api";
         String pn_cust = "pn_cust";
 
         SQLiteDatabase db2 = this.getReadableDatabase();
         Cursor cursor2 = db2.query(TABLE_PRODUCT,
-                new String[] {pn_cust},
-                pn_api +"=?",
-                new String[]{hasilScan},null,null,null);
-        if (cursor2 != null && cursor2.moveToFirst()&& cursor2.getCount()>0){
+                new String[]{pn_cust},
+                pn_api + "=?",
+                new String[]{hasilScan}, null, null, null);
+        if (cursor2 != null && cursor2.moveToFirst() && cursor2.getCount() > 0) {
             return cursor2.getString(0);
         }
         cursor2.close();
@@ -194,24 +196,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public String CekCustomer(String hasilScan){
+    public String CekCustomer(String hasilScan) {
         String pn_api = "pn_api";
         String customer = "customer";
 
         SQLiteDatabase db2 = this.getReadableDatabase();
         Cursor cursor2 = db2.query(TABLE_PRODUCT,
-                new String[] {customer},
-                pn_api +"=?",
-                new String[]{hasilScan},null,null,null);
-        if (cursor2 != null && cursor2.moveToFirst()&& cursor2.getCount()>0){
-                return cursor2.getString(0);
+                new String[]{customer},
+                pn_api + "=?",
+                new String[]{hasilScan}, null, null, null);
+        if (cursor2 != null && cursor2.moveToFirst() && cursor2.getCount() > 0) {
+            return cursor2.getString(0);
         }
         cursor2.close();
         db2.close();
         return null;
     }
 
-    public shopping InsertResult(shopping shop){
+    public shopping InsertResult(shopping shop) {
         String npk = "npk";
         String customer = "customer";
         String kanban_api = "kanban_api";
@@ -241,18 +243,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return shop;
     }
 
-    public Boolean cekOnResult(String pn){
+    public Boolean cekOnResult(String pn) {
         String cek_data_api = "data_api";
 
         SQLiteDatabase dbc = this.getReadableDatabase();
         Cursor cursor = dbc.query(TABLE_SHOPPING,// Selecting Table
                 new String[]{cek_data_api},//Selecting columns want to query
-                cek_data_api + "=?" ,
+                cek_data_api + "=?",
                 new String[]{pn},//Where clause
                 null, null, null);
 
-        if (cursor != null && cursor.moveToFirst()&& cursor.getCount()>0) {
-           return false;
+        if (cursor != null && cursor.moveToFirst() && cursor.getCount() > 0) {
+            return false;
         }
         cursor.close();
         dbc.close();
@@ -260,7 +262,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public Boolean cekOnResultC(String pn2){
+    public Boolean cekOnResultC(String pn2) {
         String cek_data_cust = "data_cust";
 
         SQLiteDatabase dbc = this.getReadableDatabase();
@@ -270,7 +272,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 new String[]{pn2},//Where clause
                 null, null, null);
 
-        if (cursor != null && cursor.moveToFirst()&& cursor.getCount()>0) {
+        if (cursor != null && cursor.moveToFirst() && cursor.getCount() > 0) {
             return false;
         }
         cursor.close();
@@ -279,59 +281,118 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public void retrieve_produk(){
+    public List<Product> retrieve_produk() {
         String part_name = "part_name";
         String sku = "sku";
+        final List<Product> list_product = new ArrayList<>();
 
         SQLiteDatabase dbr = this.getReadableDatabase();
         Cursor cursor = dbr.query(TABLE_PRODUCT,
-                new String[]{part_name,sku},
-                null,
-                null,
-                null,null,null);
-
-        if (cursor !=null && cursor.getCount()>0){
-            Product produk = new Product(null,cursor.getString(1),cursor.getString(0),null,null,null,null,null,
-                    null,null,null,null,null,null,null,null,null,null,
-                    null,null,null,null,null);
-        }
-        cursor.close();
-        dbr.close();
-    }
-
-    public void retrieve_user(){
-        String nama = "name";
-        String npk = "npk";
-
-        SQLiteDatabase dbr = this.getReadableDatabase();
-        Cursor cursor = dbr.query(TABLE_USER,
-                new String[]{nama,npk},
-                null,
-                null,
-                null,null,null);
-
-        if (cursor !=null && cursor.getCount()>0){
-            User user = new User(cursor.getString(0),cursor.getString(1),null,null,null,null,null);
-        }
-        cursor.close();
-        dbr.close();
-    }
-
-    public void retrieve_riwayat() {
-        String kanban_api = "kanban_api";
-        String kanban_cust = "kanban_cust";
-        String hasil_scan = "hasil";
-
-        SQLiteDatabase dbr = this.getReadableDatabase();
-        Cursor cursor = dbr.query(TABLE_USER,
-                new String[]{kanban_api, kanban_cust, hasil_scan},
+                new String[]{part_name, sku},
                 null,
                 null,
                 null, null, null);
 
-        if (cursor != null && cursor.getCount() > 0) {
-            shopping riwayat = new shopping(null, null, cursor.getString(0), cursor.getString(1), cursor.getString(2), null, null, null,null);
+        if (cursor.moveToFirst()) {
+            do {
+                Product produk = new Product(
+                        null,
+                        cursor.getString(1),
+                        cursor.getString(0),
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null);
+
+                list_product.add(produk);
+            }while(cursor.moveToNext());
+
+        }
+
+        cursor.close();
+        dbr.close();
+        return list_product;
+    }
+
+    public List<User> retrieve_user() {
+        String nama = "name";
+        String npk = "npk";
+        final List<User> list_user = new ArrayList<>();
+
+        SQLiteDatabase dbr = this.getReadableDatabase();
+        Cursor cursor = dbr.query(TABLE_USER,
+                new String[]{nama, npk},
+                null,
+                null,
+                null, null, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                User user = new User(
+                        cursor.getString(0),
+                        cursor.getString(1),
+                        null,
+                        null,
+                        null,
+                        null,
+                        null);
+                list_user.add(user);
+            }while(cursor.moveToNext());
+
         }
         cursor.close();
         dbr.close();
-    }}
+        return list_user;
+    }
+
+    public List<shopping> retrieve_riwayat() {
+        String kanban_api = "kanban_api";
+        String kanban_cust = "kanban_cust";
+        String hasil_scan = "hasil";
+        String datetime = "datetime";
+        final List<shopping> list_riwayat = new ArrayList<>();
+
+        SQLiteDatabase dbr = this.getReadableDatabase();
+        Cursor cursor = dbr.query(TABLE_SHOPPING,
+                new String[]{kanban_api, kanban_cust, hasil_scan, datetime},
+                null,
+                null,
+                null, null, datetime+" DESC");
+
+        if (cursor.moveToFirst()) {
+            do {
+                shopping riwayat = new shopping(
+                        null,
+                        null,
+                        cursor.getString(0),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        null,
+                        null,
+                        null);
+
+                    list_riwayat.add(riwayat);
+            }while(cursor.moveToNext());
+        }
+        cursor.close();
+        dbr.close();
+        return list_riwayat;
+    }
+}

@@ -8,7 +8,7 @@
     android:layout_marginTop="5dp"
     android:layout_marginRight="10dp"
     android:layout_marginBottom="5dp"
-    android:backgroundTint="#92badd"
+    android:backgroundTint="#00ff00"
     android:orientation="vertical"
     app:cardCornerRadius="10dp"
     app:cardElevation="8dp">
@@ -47,11 +47,12 @@
                 android:text="kanban cust"/>
 
             <TextView
-                android:id="@+id/waktu"
+                android:id="@+id/tanggal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:text="waktu scan"/>
+                android:textStyle="bold"
+                android:text="kanban cust"/>
 
         </LinearLayout>
 
@@ -61,7 +62,9 @@
             android:layout_height="wrap_content"
             android:padding="5dp"
             android:layout_gravity="center_vertical"
-            android:text="hasil scan" />
+            android:text="hasil scan"
+            android:textSize="18sp"
+            android:textStyle="italic"/>
 
 
 

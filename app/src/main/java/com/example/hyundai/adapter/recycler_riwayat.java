@@ -40,22 +40,22 @@ public class recycler_riwayat extends RecyclerView.Adapter<recycler_riwayat.MyVi
         final shopping riwayat = itemRiwayat.get(position);
         holder.text1.setText(riwayat.getKanban_api());
         holder.text2.setText(riwayat.getKanban_cust());
-        holder.text3.setText(riwayat.getHasil());
+        holder.text3.setText(riwayat.getDatetime());
+        holder.text4.setText(riwayat.getHasil());
     }
 
     @Override
     public int getItemCount(){return itemRiwayat.size();}
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
-        TextView text1, text2, text3;
-        CardView card;
+        TextView text1, text2, text3, text4;
 
         public MyViewHolder(@NonNull View itemView){
             super(itemView);
             text1 = itemView.findViewById(R.id.kanban_api);
             text2 = itemView.findViewById(R.id.kanban_cust);
-            text3 = itemView.findViewById(R.id.hasil_scan);
-            card = itemView.findViewById(R.id.card_view);
+            text3 = itemView.findViewById(R.id.tanggal);
+            text4 = itemView.findViewById(R.id.hasil_scan);
         }
     }
 }

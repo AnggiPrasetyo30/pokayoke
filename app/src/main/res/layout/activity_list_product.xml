@@ -19,25 +19,12 @@
         app:layout_constraintStart_toStartOf="parent">
 
 
-        <ImageButton
-            android:id="@+id/btnlogout"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="10dp"
-            android:background="@drawable/logout" />
-
         <TextView
-            android:id="@+id/nama_user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/btnlogout"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="10dp"
-            android:background="#FFFFFF"
-            android:text="@string/nama"
-            android:textColor="#000000"
-            android:textStyle="bold" />
+            android:text="Daftar Produk"
+            android:textSize="24sp"
+            android:textStyle="bold"/>
 
         <ImageView
             android:id="@+id/cv_img"
@@ -52,17 +39,17 @@
     </RelativeLayout>
 
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewPager"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/viewf"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayout"
         app:layout_constraintBottom_toTopOf="@+id/btnBuat"
-        tools:layout_editor_absoluteX="0dp"
-        app:layout_constraintVertical_bias="1.0"
-        >
-    </androidx.viewpager.widget.ViewPager>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
     <Button
         android:id="@+id/btnBuat"
