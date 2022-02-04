@@ -1,6 +1,7 @@
 package com.example.hyundai.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,8 @@ import com.example.hyundai.R;
 import com.example.hyundai.SQLite.DatabaseHelper;
 import com.example.hyundai.SQLite.Product;
 import com.example.hyundai.activity.MainActivity;
+import com.example.hyundai.update_product;
+import com.example.hyundai.update_user;
 
 import java.util.List;
 
@@ -72,8 +75,16 @@ public class recycler_produk extends RecyclerView.Adapter<recycler_produk.MyView
                 @Override
                 public void onClick(View view) {
                     adapter.itemProduk.remove(getAdapterPosition());
-                    mDatabaseHelper.DeleteProduct(adapter.itemProduk.get(getAdapterPosition()).sku);
+                    mDatabaseHelper.DeleteProduct(adapter.itemProduk.get(getAdapterPosition()).getSku());
                     adapter.notifyDataSetChanged();
+                }
+            });
+
+            edit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, update_product.class);
+                    context.startActivity(intent);
                 }
             });
         }
