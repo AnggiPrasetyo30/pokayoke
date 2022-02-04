@@ -130,20 +130,200 @@
                 android:text="ptloc"
                 android:paddingTop="5dp"/>
 
-            <Spinner
-                android:id="@+id/fieldDepartement"
+            <EditText
+                android:id="@+id/fieldPtloc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/white" />
+                android:background="@color/white" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Op Skill"
+                android:text="sfgwh"
                 android:paddingTop="5dp"/>
 
             <EditText
-                android:id="@+id/fieldOpSkill"
+                android:id="@+id/fieldSfgwh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="fgwh"
+                android:paddingTop="5dp"/>
+
+            <EditText
+                android:id="@+id/fieldFgwh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="nkiwh"
+                android:paddingTop="5dp"/>
+
+            <EditText
+                android:id="@+id/fieldNkiwh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Type"
+                android:paddingTop="5dp"/>
+
+            <EditText
+                android:id="@+id/fieldType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Customer"
+                android:paddingTop="5dp"/>
+
+            <EditText
+                android:id="@+id/fieldCustomer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Customer Id"
+                android:paddingTop="5dp"/>
+
+            <EditText
+                android:id="@+id/fieldCustomerId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Supplier Id"
+                android:paddingTop="5dp"/>
+
+            <EditText
+                android:id="@+id/fieldSupplierId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Job Number"
+                android:paddingTop="5dp"/>
+
+            <EditText
+                android:id="@+id/fieldJobNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Address"
+                android:paddingTop="5dp"/>
+
+            <EditText
+                android:id="@+id/fieldAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Time Production"
+                android:paddingTop="5dp"/>
+
+            <EditText
+                android:id="@+id/fieldTimeProduction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Quantity Packaging"
+                android:paddingTop="5dp"/>
+
+            <EditText
+                android:id="@+id/fieldQuantityPackaging"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Quantity Child"
+                android:paddingTop="5dp"/>
+
+            <EditText
+                android:id="@+id/fieldQuantityChild"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Goods"
+                android:paddingTop="5dp"/>
+
+            <EditText
+                android:id="@+id/fieldGoods"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Line Production"
+                android:paddingTop="5dp"/>
+
+            <EditText
+                android:id="@+id/fieldLineProduction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sequence QR"
+                android:paddingTop="5dp"/>
+
+            <EditText
+                android:id="@+id/fieldSequenceQR"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sequence Data Part"
+                android:paddingTop="5dp"/>
+
+            <EditText
+                android:id="@+id/fieldSequenceDataPart"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white" />
