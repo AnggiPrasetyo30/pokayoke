@@ -45,4 +45,23 @@
         <item>Finance Accounting</item>
         <item>Purchasing Marketing</item>
     </string-array>
+    <string-array name="daftar_Station">
+        <item>QC-001</item>
+        <item>EMB</item>
+        <item>ASSY-001</item>
+    </string-array>
+    <string-array name="daftar_position">
+        <item>RH</item>
+        <item>LH</item>
+        <item> </item>
+    </string-array>
+    <string-array name="daftar_good">
+        <item>FG</item>
+        <item>SFG</item>
+    </string-array>
+    <string-array name="daftar_lineprod">
+        <item>ASSY</item>
+        <item>PT</item>
+        <item>PI</item>
+    </string-array>
 </resources>

@@ -30,7 +30,7 @@ public class create_user extends AppCompatActivity {
         setContentView(R.layout.activity_create_user);
 
         mDatabaseHelper = new DatabaseHelper(this);
-        NPK = (EditText) findViewById(R.id.fieldNPK);
+        NPK = (EditText) findViewById(R.id.fieldNpk);
         Username = (EditText) findViewById(R.id.fieldUsername);
         Password = (EditText) findViewById(R.id.fieldPassword);
         RFIDTag = (EditText) findViewById(R.id.fieldRFID);
@@ -46,9 +46,6 @@ public class create_user extends AppCompatActivity {
         Simpan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                mDatabaseHelper.insertValue(new User(NPK.toString(),Username.toString(),Password.toString(),RFIDTag.toString()
-//                        ,Nama.toString(),Usergroup.toString(),Department.toString(),OpSkill.to,
-//                        "","Active",String.valueOf(Calendar.getInstance().getTime()),"","T","0"));
                 SQLiteDatabase db = mDatabaseHelper.getWritableDatabase();
                 db.execSQL("insert into user(npk, username, password, rfid_tag, name, usergroup, departement, op_skill, last_login, status, created_at, updated_at, TRIAL857, status_akun) values('" +
                         NPK.getText().toString() + "','" + Username.getText().toString() + "','" + Password.getText().toString() + "','" +
@@ -58,6 +55,5 @@ public class create_user extends AppCompatActivity {
                 finish();
             }
         });
-
     }
 }

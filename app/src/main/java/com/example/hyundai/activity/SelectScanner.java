@@ -61,7 +61,11 @@ public class SelectScanner extends AppCompatActivity {
         });
     }
 
-    public void onBackPressed() {    }
+    public void onBackPressed() {
+        Intent intent = new Intent(SelectScanner.this, Login.class);
+        startActivity(intent);
+        finish();
+    }
 
 }
 

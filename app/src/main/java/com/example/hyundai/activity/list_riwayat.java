@@ -32,12 +32,13 @@ public class list_riwayat extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.viewf);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         List<shopping> itemP = mDatabaseHelper.retrieve_riwayat();
-        adDataf = new recycler_riwayat(this, itemP);
-        adDataf.notifyDataSetChanged();
-        recyclerView.setAdapter(adDataf);
 
-        String tanggal = itemP.get(0).datetime;
-        Toast.makeText(this, tanggal, Toast.LENGTH_SHORT).show();
+        if (itemP == null) {
+            Toast.makeText(this, "Belum ada data !", Toast.LENGTH_LONG).show();
+        } else  {
+            adDataf = new recycler_riwayat(this, itemP);
+            adDataf.notifyDataSetChanged();
+            recyclerView.setAdapter(adDataf);
+        }
     }
-
 }

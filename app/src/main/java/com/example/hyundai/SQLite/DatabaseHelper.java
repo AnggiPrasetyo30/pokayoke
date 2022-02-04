@@ -330,7 +330,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 new String[]{part_name, sku},
                 null,
                 null,
-                null, null, null);
+                null, null, part_name + " ASC");
 
         if (cursor.moveToFirst()) {
             do {
@@ -381,7 +381,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 null,
                 null, null, null);
 
-        if (cursor.moveToFirst()) {
+        if (cursor.moveToFirst() && cursor != null) {
             do {
                 User user = new User(
                         cursor.getString(0),
@@ -414,7 +414,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 null,
                 null, null, datetime+" DESC");
 
-        if (cursor.moveToFirst()) {
+        if (cursor.moveToFirst() && cursor != null) {
             do {
                 shopping riwayat = new shopping(
                         null,
