@@ -164,7 +164,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:backgroundTint="@color/white"
-                    android:entries="@array/usergroup" />
+                    android:entries="@array/daftar_group" />
             </LinearLayout>
 
             <LinearLayout
@@ -187,7 +187,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:backgroundTint="@color/white"
-                    android:entries="@array/departement"/>
+                    android:entries="@array/daftar_departement"/>
             </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
