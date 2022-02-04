@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,5 +36,14 @@ public class list_product extends AppCompatActivity {
         adDataf = new recycler_produk(this, itemP);
         adDataf.notifyDataSetChanged();
         recyclerView.setAdapter(adDataf);
+
+        Button btnCreate = findViewById(R.id.btnBuat);
+        btnCreate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(list_product.this, create_product.class);
+                startActivity(intent);
+            }
+        });
     }
 }
