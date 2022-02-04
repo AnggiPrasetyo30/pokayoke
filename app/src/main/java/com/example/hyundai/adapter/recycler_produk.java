@@ -85,6 +85,7 @@ public class recycler_produk extends RecyclerView.Adapter<recycler_produk.MyView
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, update_product.class);
+                    intent.putExtra("SKU", adapter.itemProduk.get(getAdapterPosition()).getSku());
                     context.startActivity(intent);
                 }
             });
