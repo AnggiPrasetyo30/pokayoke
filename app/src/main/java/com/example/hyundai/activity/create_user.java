@@ -30,7 +30,7 @@ public class create_user extends AppCompatActivity {
         setContentView(R.layout.activity_create_user);
 
         mDatabaseHelper = new DatabaseHelper(this);
-        NPK = (EditText) findViewById(R.id.fieldNPK);
+        NPK = (EditText) findViewById(R.id.fieldNpk);
         Username = (EditText) findViewById(R.id.fieldUsername);
         Password = (EditText) findViewById(R.id.fieldPassword);
         RFIDTag = (EditText) findViewById(R.id.fieldRFID);

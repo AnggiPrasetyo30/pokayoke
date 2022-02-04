@@ -10,9 +10,11 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.hyundai.activity.MainActivity;
+import com.example.hyundai.adapter.recycler_user;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -438,6 +440,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void DeleteProduct(String Psku) {
         SQLiteDatabase dbdeleteP = this.getWritableDatabase();
         dbdeleteP.delete(TABLE_PRODUCT,"sku=?", new String[]{Psku});
+    }
+
+    public void DeleteUser(String Unpk) {
+
+        SQLiteDatabase dbdeleteP = this.getWritableDatabase();
+        dbdeleteP.delete(TABLE_USER,"npk=?", new String[]{Unpk});
+        Log.e("TAG", "DeleteUser: "+Unpk );
     }
 
 }
