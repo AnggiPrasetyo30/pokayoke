@@ -28,4 +28,15 @@
     <string name="reset">RESET</string>
     <string name="denso">Scan Barcode</string>
     <string name="tmmin">Scan QR</string>
+
+    <string-array name="usergroup">
+        <item>Operator</item>
+        <item>Leader</item>
+        <item>Manager</item>
+    </string-array>
+
+    <string-array name="departement">
+        <item>PPIC</item>
+    </string-array>
+
 </resources>

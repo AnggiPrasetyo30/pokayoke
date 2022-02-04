@@ -395,4 +395,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         dbr.close();
         return list_riwayat;
     }
+
+    public void DeleteProduct(String Psku) {
+        SQLiteDatabase dbdeleteP = this.getWritableDatabase();
+        dbdeleteP.delete(TABLE_PRODUCT,"sku=?", new String[]{Psku});
+    }
+
 }
