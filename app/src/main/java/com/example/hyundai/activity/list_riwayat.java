@@ -39,4 +39,5 @@ public class list_riwayat extends AppCompatActivity {
         String tanggal = itemP.get(0).datetime;
         Toast.makeText(this, tanggal, Toast.LENGTH_SHORT).show();
     }
+
 }

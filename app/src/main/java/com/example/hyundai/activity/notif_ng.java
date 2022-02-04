@@ -23,8 +23,8 @@ public class notif_ng extends Dialog implements  View.OnClickListener{
     public Activity c;
     public Dialog d;
     public Button next;
-    TextView alasan;
     MediaPlayer mp;
+    TextView alasan;
 
     //SharedPreferences
     SharedPreferences mSharedPreferences;
@@ -51,6 +51,7 @@ public class notif_ng extends Dialog implements  View.OnClickListener{
         alasan = findViewById(R.id.reason);
         alasan.setText(MainActivity.alasan_NG);
         next = findViewById(R.id.btnNext);
+        mp = MainActivity.mp;
         next.setOnClickListener(this);
     }
 
@@ -64,8 +65,9 @@ public class notif_ng extends Dialog implements  View.OnClickListener{
         mp.stop();
 
 
+        mp.stop();
+
         Intent intent = new Intent(getContext(), Login.class );
-//        intent.putExtra(LOCKED, "1");
         Log.e("LOCKED", "onCreate: " + LOCKED );
         c.startActivity(intent);
     }
