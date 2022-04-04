@@ -1,0 +1,67 @@
+<resources>
+    <string name="app_name">Pokayoke Apps</string>
+
+    <string name="activity_intent_filter_action">com.darryncampbell.datawedge.java.ACTION</string>
+
+    <string name="datawedge_intent_key_source">com.symbol.datawedge.source</string>
+    <string name="datawedge_intent_key_label_type">com.symbol.datawedge.label_type</string>
+    <string name="datawedge_intent_key_data">com.symbol.datawedge.data_string</string>
+    <string name="login">LOGIN</string>
+    <string name="user">User</string>
+    <string name="password">Password</string>
+    <string name="nama">nama user</string>
+    <string name="opsi">Opsi Scan</string>
+    <string name="scanQR">TMMIN</string>
+    <string name="scanBarcode">DENSO</string>
+    <string name="unlock">Buka Kunci</string>
+    <string name="kode_kanban">Kode Kanban</string>
+    <string name="hint">Kode kanban ter-scan</string>
+    <string name="hint1">Kode Kanban akan muncul setelah scan</string>
+    <string name="nama_aplikasi">Aplikasi Pokayoke</string>
+    <string name="PT">PT Autoplastik Indonesia</string>
+    <string name="logout">LOGOUT</string>
+    <string name="status_hasil_scan_terakhir">status hasil scan terakhir</string>
+    <string name="riwayat">Riwayat</string>
+    <string name="hint2">silahkan logout dan hubungi leader</string>
+    <string name="hint3"> hanya leader yang dapat membuka kunci.</string>
+    <string name="warning">Perangkat telah terkunci!</string>
+    <string name="reset">RESET</string>
+    <string name="denso">Scan Barcode</string>
+    <string name="tmmin">Scan QR</string>
+    <string-array name="daftar_group">
+        <item>Operator</item>
+        <item>Leader</item>
+        <item>Foreman</item>
+        <item>Supervisor</item>
+        <item>Manager</item>
+        <item>Admin</item>
+    </string-array>
+    <string-array name="daftar_departement">
+        <item>PPIC</item>
+        <item>Production</item>
+        <item>Quality</item>
+        <item>Engineering</item>
+        <item>HR,GA,EHS</item>
+        <item>Finance Accounting</item>
+        <item>Purchasing Marketing</item>
+    </string-array>
+    <string-array name="daftar_Station">
+        <item>QC-001</item>
+        <item>EMB</item>
+        <item>ASSY-001</item>
+    </string-array>
+    <string-array name="daftar_position">
+        <item>RH</item>
+        <item>LH</item>
+        <item> </item>
+    </string-array>
+    <string-array name="daftar_good">
+        <item>FG</item>
+        <item>SFG</item>
+    </string-array>
+    <string-array name="daftar_lineprod">
+        <item>ASSY</item>
+        <item>PT</item>
+        <item>PI</item>
+    </string-array>
+</resources>
