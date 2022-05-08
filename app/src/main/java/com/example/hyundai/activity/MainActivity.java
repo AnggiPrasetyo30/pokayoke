@@ -85,6 +85,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
@@ -93,19 +95,28 @@ public class MainActivity extends AppCompatActivity {
         String trial = GTRIAL;
         GLOCK = intent.getStringExtra(LOCKED);
 
-        if (a.length() == 32) {
+        //Cek Parsing API dan Customer
+        if (a.length() == 32) { //Kanban Hyundai
             data_cust = a;
             String kanban = GetSubstrCustBack(a);
             output.setText(kanban);
             pn_cust = kanban;
             hasilScan++;
-        } else if (a.length() == 29) {
+        } else if (a.length() == 29) { //Kanban Hyundai
             data_cust = a;
             String kanban = GetSubstrCustFront(a);
             output.setText(kanban);
             pn_cust = kanban;
             hasilScan++;
-        } else {
+        }
+        else if (a.length() > 35) { //Kanban DENSO
+            data_cust = a;
+            String kanban = GetSringDENSO(a);
+            output.setText(kanban);
+            pn_cust = kanban;
+            hasilScan++;
+        }
+        else {
             data_api = a;
             String kanban = GetSubstrApi(a);
             if (mDatabaseHelper.CekKanbanAPI(kanban) != null) {
@@ -120,19 +131,21 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+
+        //Cek Kanban API dan Customer
         if(pn_api!=null&&pn_cust!=null) {
             if (!mDatabaseHelper.cekOnResult(data_api) && !mDatabaseHelper.cekOnResultC(data_cust)) {
 
-                    mDatabaseHelper.InsertResult(new shopping(npk, customer, pn_api, pn_cust,
+                mDatabaseHelper.InsertResult(new shopping(npk, customer, pn_api, pn_cust,
                         "Double", String.valueOf(Calendar.getInstance().getTime()), data_api, data_cust, trial));
-                    intent.putExtra(GLOCK, "1");
-                    alasan_NG = "Data kanban dobel";
-                    mp.start();
-                    showNotifNotGood();
+                intent.putExtra(GLOCK, "1");
+                alasan_NG = "Data kanban dobel";
+                mp.start();
+                showNotifNotGood();
 
-                    Log.e("LOCKED", "onCreate: " + GLOCK );
-                    pn_api=null;
-                    hasilScan = 0;
+                Log.e("LOCKED", "onCreate: " + GLOCK );
+                pn_api=null;
+                hasilScan = 0;
             } else if (hasilScan > 1) {
                 if (pn_cust.contains(pn_api)) {
                     showNotifGood();
@@ -192,6 +205,9 @@ public class MainActivity extends AppCompatActivity {
         return kanban.substring(8, 25);
     }
 
+    private String GetSringDENSO(String kanban) {
+        return kanban.substring(0,13);
+    }
 
 
 
